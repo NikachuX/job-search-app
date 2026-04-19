@@ -22,7 +22,7 @@
 
 .vacancy-row {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 80px;
+  grid-template-columns: 2fr 1fr 2fr 80px;
   align-items: center;
   padding: 20px 24px;
   background: #f8fafc;

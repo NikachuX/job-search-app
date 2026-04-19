@@ -65,3 +65,51 @@
   color: white;
   border: none;
 }
+
+/* Мобильное меню */
+.header__burger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  z-index: 101;
+}
+
+.header__burger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: var(--color-text);
+  transition: 0.3s;
+}
+
+.header__nav.mobile-open {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  background: white;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  gap: 20px;
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .header__burger {
+    display: flex;
+  }
+  
+  .header__nav {
+    display: none;
+  }
+  
+  .header__nav.mobile-open {
+    display: flex;
+  }
+  
+  .header__actions {
+    margin-top: 20px;
+  }
+}

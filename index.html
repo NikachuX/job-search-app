@@ -1,171 +1,188 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="assets/icon.png">
+  <link rel="icon" type="image/png" href="src/assets/icon.png">
   <title>Job Finder</title>
 </head>
+
 <body>
   <header class="header">
     <div class="container header__container">
+      <a href="#">
       <div class="header__logo">
-      <!-- Inline SVG иконка брифкейса -->
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M20 7H4C2.89543 7 2 7.89543 2 9V17C2 18.1046 2.89543 19 4 19H20C21.1046 19 22 18.1046 22 17V9C22 7.89543 21.1046 7 20 7Z" stroke="currentColor" stroke-width="2"/>
-        <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" stroke="currentColor" stroke-width="2"/>
-      </svg>
-      JobFinder
-    </div>
+        <!-- Inline SVG иконка брифкейса -->
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M20 7H4C2.89543 7 2 7.89543 2 9V17C2 18.1046 2.89543 19 4 19H20C21.1046 19 22 18.1046 22 17V9C22 7.89543 21.1046 7 20 7Z"
+            stroke="currentColor" stroke-width="2" />
+          <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" stroke="currentColor"
+            stroke-width="2" />
+        </svg>
+        JobFinder
+      </div>
+      </a>
 
-      <nav class="header__nav">
-        <a href="#" class="header__link">Вакансии</a>
-        <a href="#" class="header__link">Компании</a>
-        <a href="#" class="header__link">Советы</a>
+      <nav class="header__nav" id="header-nav">
+        <a href="#vacancies" class="header__link">Вакансии</a>
+        <a href="#companies" class="header__link">Компании</a>
+        <a href="#tips" class="header__link">Советы</a>
         <a href="#" class="header__link">О сервисе</a>
       </nav>
 
-    <div class="header__actions">
-      <button class="header__login">Вход</button>
-      <button class="header__register">Регистрация</button>
-    </div>
-  </div>
-</header>
+      <div class="header__actions" id="header-actions">
+        <!-- Для неавторизованного пользователя -->
+        <button class="header__login" id="login-btn">Вход</button>
+        <button class="header__register" id="register-btn">Регистрация</button>
 
-<main>
-  <section class="hero">
-    <div class="hero__container">
-      <!-- Левая часть -->
-      <div class="hero__content">
-        <h1 class="hero__title">Найдите работу<br>своей мечты!</h1>
-        <p class="hero__subtitle">Тысячи вакансий рядом с вами</p>
-
-        <form class="search">
-          <input type="text" placeholder="Должность или ключевое слово" class="search__input" />
-          <input type="text" placeholder="Город или регион" class="search__input" />
-          <button type="submit" class="search__button">Найти</button>
-        </form>
-      </div>
-
-      <!-- Правая иллюстрация (сгенерированная) -->
-      <div class="hero__illustration">
-        <img src="src/assets/hero-illustration.jpg" alt="Найдите работу своей мечты" />
-      </div>
-    </div>
-  </section>
-  <!-- Features -->
-<section class="features">
-  <div class="features__container">
-    <div class="features__item">
-      <div class="features__icon">🔍</div>
-      <h3>Поиск работы</h3>
-      <p>Актуальные вакансии для вас</p>
-    </div>
-
-    <div class="features__item">
-      <div class="features__icon">📄</div>
-      <h3>Создать резюме</h3>
-      <p>Заполните резюме за пару минут</p>
-    </div>
-
-    <div class="features__item">
-      <div class="features__icon">💡</div>
-      <h3>Советы по карьере</h3>
-      <p>Полезные статьи и рекомендации</p>
-    </div>
-  </div>
-</section>
-
-<!-- Популярные вакансии -->
-<section class="vacancies">
-  <div class="vacancies__container">
-    <div class="vacancies__header">
-      <h2>Популярные вакансии</h2>
-      <button class="vacancy-row__btn">Смотреть все вакансии</button>
-    </div>
-
-    <div class="vacancies__list">
-      <div class="vacancy-row">
-        <div class="vacancy-row__title">Маркетолог</div>
-        <div class="vacancy-row__salary">от 80 000 ₽</div>
-        <div class="vacancy-row__city">Москва</div>
-        <button class="vacancy-row__btn">Откликнуться</button>
-      </div>
-
-      <div class="vacancy-row">
-        <div class="vacancy-row__title">Веб-дизайнер</div>
-        <div class="vacancy-row__salary">от 70 000 ₽</div>
-        <div class="vacancy-row__city">Санкт-Петербург</div>
-        <button class="vacancy-row__btn">Откликнуться</button>
-      </div>
-
-      <div class="vacancy-row">
-        <div class="vacancy-row__title">Программист</div>
-        <div class="vacancy-row__salary">от 100 000 ₽</div>
-        <div class="vacancy-row__city">Удаленно</div>
-        <button class="vacancy-row__btn">Откликнуться</button>
-      </div>
-
-      <div class="vacancy-row">
-        <div class="vacancy-row__title">Менеджер по продажам</div>
-        <div class="vacancy-row__salary">от 60 000 ₽</div>
-        <div class="vacancy-row__city">Екатеринбург</div>
-        <button class="vacancy-row__btn">Откликнуться</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Лучшие компании -->
-<section class="companies">
-  <div class="companies__container">
-    <h2>Лучшие компании</h2>
-    <div class="companies__list">
-      <div class="company-card">TechCorp</div>
-      <div class="company-card">GlobalMarket</div>
-      <div class="company-card">EcoLine</div>
-      <div class="company-card">StarMedia</div>
-    </div>
-    <button class="vacancy-row__btn" style="margin: 30px auto 0; display: block;">Все компании</button>
-  </div>
-<!-- Советы для соискателей -->
-<section class="tips">
-  <div class="tips__container">
-    <!-- Основные карточки советов -->
-    <div class="tips__list">
-      <div class="tip-card">
-        <img src="src/assets/tip1.jpg" alt="Как пройти собеседование">
-        <div class="tip-card__content">
-          <h3>Как пройти собеседование успешно</h3>
-          <p>Полезные советы и распространённые ошибки, которых стоит избегать.</p>
+        <!-- Для авторизованного пользователя (скрыто по умолчанию) -->
+        <div id="user-panel" style="display: none; align-items: center; gap: 12px;">
+          <span id="username-display" style="font-weight: 500; color: var(--color-primary);"></span>
+          <button id="logout-btn"
+            style="background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">
+            Выход
+          </button>
         </div>
       </div>
 
-      <div class="tip-card">
-        <img src="src/assets/tip2.jpg" alt="Идеальное резюме">
-        <div class="tip-card__content">
-          <h3>Составляем идеальное резюме</h3>
-          <p>Что писать в резюме, чтобы recruiter сразу обратил внимание.</p>
+      <div class="header__burger" id="burger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero__container">
+        <!-- Левая часть -->
+        <div class="hero__content">
+          <h1 class="hero__title">Найдите работу<br>своей мечты!</h1>
+          <p class="hero__subtitle">Тысячи вакансий рядом с вами</p>
+
+          <form class="search">
+            <input type="text" placeholder="Должность" class="search__input" />
+            <input type="text" placeholder="Город или регион" class="search__input" />
+            <button type="submit" class="search__button" onclick="document.getElementById('vacancies').scrollIntoView({behavior: 'smooth'});">Найти</button>
+          </form>
+        </div>
+
+        <!-- Правая иллюстрация (сгенерированная) -->
+        <div class="hero__illustration">
+          <img src="src/assets/hero-illustration.jpg" alt="Найдите работу своей мечты" />
         </div>
       </div>
+    </section>
+    <!-- Features -->
+    <section class="features">
+      <div class="features__container">
+        <div class="features__item">
+          <div class="features__icon">🔍</div>
+          <h3>Поиск работы</h3>
+          <p>Актуальные вакансии для вас</p>
+        </div>
 
-      <div class="tip-card">
-        <img src="src/assets/tip3.jpg" alt="Навыки 2026">
-        <div class="tip-card__content">
-          <h3>Навыки, востребованные в 2026 году</h3>
-          <p>Тренды рынка труда и какие навыки помогут выделиться.</p>
+        <div class="features__item">
+          <div class="features__icon">📄</div>
+          <h3>Создать резюме</h3>
+          <p>Заполните резюме за пару минут</p>
+        </div>
+
+        <div class="features__item">
+          <div class="features__icon">💡</div>
+          <h3>Советы по карьере</h3>
+          <p>Полезные статьи и рекомендации</p>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Боковая карточка «Создайте резюме» -->
-    <div class="tips__sidebar">
-      <h3>Создайте резюме<br>и получите шанс быть<br>замеченным работодателем!</h3>
-      <p>Заполните форму и мы поможем вам составить профессиональное резюме за несколько минут.</p>
-      <button>Заполнить резюме</button>
-    </div>
-  </div>
-</section>
+    <!-- Популярные вакансии -->
+    <section class="vacancies" id="vacancies">
+      <div class="vacancies__container">
+        <div class="vacancies__header">
+          <h2>Популярные вакансии</h2>
+          <button class="vacancy-row__btn">Смотреть все вакансии</button>
+        </div>
+        <div class="filters"
+          style="margin-bottom: 24px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
+          <div>
+            <label>Мин. зарплата: </label>
+            <input type="number" id="min-salary" placeholder="от 50000"
+              style="padding:8px; width:140px; border-radius:6px; border:1px solid #ddd;">
+          </div>
+          <!-- ИНДИКАТОР ЗАГРУЗКИ -->
+          <div id="loading-indicator" class="loading" style="display: none; text-align: center; padding: 60px 20px;">
+            <div class="spinner"></div>
+            <p style="margin-top: 16px; color: #64748b; font-size: 16px;">Загрузка вакансий...</p>
+          </div>
+          <div>
+            <select id="sort-select" style="padding:8px; border-radius:6px; border:1px solid #ddd;">
+              <option value="default">По умолчанию</option>
+              <option value="salary-desc">Зарплата по убыванию</option>
+              <option value="salary-asc">Зарплата по возрастанию</option>
+              <option value="views-desc">По популярности</option>
+            </select>
+          </div>
+
+          <button id="apply-filters" class="vacancy-row__btn">Применить фильтры</button>
+        </div>
+
+        <div class="vacancies__list" id="vacancies-list">
+        </div>
+    </section>
+
+    <!-- Лучшие компании -->
+    <section class="companies" id="companies">
+      <div class="companies__container">
+        <h2>Лучшие компании</h2>
+        <div class="companies__list">
+          <div class="company-card">TechCorp</div>
+          <div class="company-card">GlobalMarket</div>
+          <div class="company-card">EcoLine</div>
+          <div class="company-card">StarMedia</div>
+        </div>
+        <button class="vacancy-row__btn" style="margin: 30px auto 0; display: block;">Все компании</button>
+      </div>
+      <!-- Советы для соискателей -->
+      <section class="tips" id="tips">
+        <div class="tips__container">
+          <!-- Основные карточки советов -->
+          <div class="tips__list">
+            <div class="tip-card">
+              <img src="src/assets/tip1.jpg" alt="Как пройти собеседование">
+              <div class="tip-card__content">
+                <h3>Как пройти собеседование успешно</h3>
+                <p>Полезные советы и распространённые ошибки, которых стоит избегать.</p>
+              </div>
+            </div>
+
+            <div class="tip-card">
+              <img src="src/assets/tip2.jpg" alt="Идеальное резюме">
+              <div class="tip-card__content">
+                <h3>Составляем идеальное резюме</h3>
+                <p>Что писать в резюме, чтобы recruiter сразу обратил внимание.</p>
+              </div>
+            </div>
+
+            <div class="tip-card">
+              <img src="src/assets/tip3.jpg" alt="Навыки 2026">
+              <div class="tip-card__content">
+                <h3>Навыки, востребованные в 2026 году</h3>
+                <p>Тренды рынка труда и какие навыки помогут выделиться.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Боковая карточка «Создайте резюме» -->
+          <div class="tips__sidebar">
+            <h3>Создайте резюме<br>и получите шанс быть<br>замеченным работодателем!</h3>
+            <p>Заполните форму и мы поможем вам составить профессиональное резюме за несколько минут.</p>
+            <button>Заполнить резюме</button>
+          </div>
+        </div>
+      </section>
   </main>
 
   <footer class="footer">
@@ -175,5 +192,103 @@
   </footer>
 
   <script type="module" src="/src/js/main.js"></script>
+  <!-- МОДАЛЬНОЕ ОКНО ДЛЯ ВХОДА -->
+  <div id="login-modal" class="modal-backdrop" style="display: none;">
+    <div class="modal">
+      <div class="modal__header">
+        <h3>Вход в аккаунт</h3>
+        <button class="modal__close" data-close="login-modal">✕</button>
+      </div>
+      <div class="modal__content">
+        <input type="email" id="login-email" class="modal-input" placeholder="Email" />
+        <input type="password" id="login-password" class="modal-input" placeholder="Пароль" />
+        <button class="modal-submit" id="login-submit">Войти</button>
+        <p style="text-align:center; margin-top:16px; font-size:14px;">
+          Нет аккаунта? <span style="color:var(--color-primary); cursor:pointer;"
+            id="switch-to-register">Зарегистрироваться</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО ДЛЯ РЕГИСТРАЦИИ -->
+  <div id="register-modal" class="modal-backdrop" style="display: none;">
+    <div class="modal">
+      <div class="modal__header">
+        <h3>Регистрация</h3>
+        <button class="modal__close" data-close="register-modal">✕</button>
+      </div>
+      <div class="modal__content">
+        <input type="text" id="register-name" class="modal-input" placeholder="Имя" />
+        <input type="email" id="register-email" class="modal-input" placeholder="Email" />
+        <input type="password" id="register-password" class="modal-input" placeholder="Пароль" />
+        <button class="modal-submit" id="register-submit">Зарегистрироваться</button>
+        <p style="text-align:center; margin-top:16px; font-size:14px;">
+          Уже есть аккаунт? <span style="color:var(--color-primary); cursor:pointer;" id="switch-to-login">Войти</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛЬНОЕ ОКНО ДЛЯ ПОДРОБНОЙ ИНФОРМАЦИИ О ВАКАНСИИ -->
+  <div id="detail-modal" class="modal-backdrop" style="display: none;">
+    <div class="modal" style="max-width: 520px;">
+      <div class="modal__header">
+        <h3 id="detail-title">Название вакансии</h3>
+        <button class="modal__close" data-close="detail-modal">✕</button>
+      </div>
+      <div class="modal__content" id="detail-content">
+        <!-- JS будет заполнять сюда динамический контент -->
+      </div>
+    </div>
+  </div>
+  <!-- МОДАЛЬНОЕ ОКНО ДЛЯ СОВЕТОВ -->
+  <div id="tip-modal" class="modal-backdrop" style="display: none;">
+    <div class="modal" style="max-width: 560px;">
+      <div class="modal__header">
+        <h3 id="tip-modal-title">Совет</h3>
+        <button class="modal__close" data-close="tip-modal">✕</button>
+      </div>
+      <div class="modal__content" id="tip-modal-content">
+        <!-- JS будет заполнять заголовок и текст -->
+      </div>
+    </div>
+  </div>
+  <!-- МОДАЛЬНОЕ ОКНО "ТРЕБУЕТСЯ АВТОРИЗАЦИЯ" -->
+  <div id="auth-required-modal" class="modal-backdrop" style="display: none;">
+    <div class="modal" style="max-width: 420px;">
+      <div class="modal__header">
+        <h3>Требуется вход</h3>
+        <button class="modal__close" data-close="auth-required-modal">✕</button>
+      </div>
+      <div class="modal__content" style="text-align: center; padding: 32px 24px;">
+        <p style="font-size: 18px; margin-bottom: 24px;">Для выполнения этого действия необходимо войти в аккаунт</p>
+        <button id="go-to-login-btn" class="modal-submit" style="width: 100%; margin-bottom: 12px;">
+          Войти в аккаунт
+        </button>
+        <button id="go-to-register-btn" class="modal-submit" style="width: 100%; background: #10b981;">
+          Зарегистрироваться
+        </button>
+        <p style="margin-top: 20px; font-size: 14px; color: #64748b;">
+          После входа все функции будут доступны
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ШАБЛОН КАРТОЧКИ ВАКАНСИИ (скрытый) -->
+<template id="vacancy-template">
+  <div class="vacancy-row">
+    <div class="vacancy-row__title"></div>
+    <div class="vacancy-row__salary"></div>
+    <div class="vacancy-row__city"></div>
+    <div class="vacancy-row__actions">
+      <button class="vacancy-row__btn favorite-btn" title="В избранное">♡</button>
+      <button class="vacancy-row__btn apply-btn">Откликнуться</button>
+      <button class="vacancy-row__btn detail-btn">Подробнее</button>
+    </div>
+  </div>
+</template>
 </body>
+
 </html>

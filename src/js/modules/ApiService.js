@@ -1,72 +1,79 @@
-// src/js/modules/ApiService.js
 export class ApiService {
   constructor() {
-    this.mockUrl = '/src/data/mock-vacancies.json'; // создадим позже
-    this.externalApi = 'https://jsonfakery.com/job-posts'; // публичный мок (или любой другой)
+    this.mockUrl = '/src/data/mock-vacancies.json';
+    this.externalApi = 'https://dummyjson.com/products?limit=20';
   }
 
-  // Основной метод — получаем вакансии (с приоритетом на мок, fallback на внешний)
   async getVacancies(filters = {}) {
     try {
-      // Сначала пытаемся взять из локального мока
       const response = await fetch(this.mockUrl);
       let vacancies = await response.json();
 
-      // Имитация реального времени (добавляем случайные изменения)
       vacancies = this.simulateRealTimeUpdate(vacancies);
+      let filtered = this.applyFilters(vacancies, filters);
+      filtered = this.applySort(filtered, filters.sortBy || 'default');
 
-      // Применяем фильтры на клиенте
-      return this.applyFilters(vacancies, filters);
+      return filtered;
     } catch (error) {
-      console.warn('Local mock failed, using external API');
-      // Fallback на внешний публичный API
+      console.warn('Локальный мок недоступен, используем внешний API');
       const res = await fetch(this.externalApi);
       const data = await res.json();
-      return this.normalizeExternalData(data);
+      return this.normalizeExternalData(data.products || []);
     }
   }
 
   simulateRealTimeUpdate(vacancies) {
     return vacancies.map(v => ({
       ...v,
-      views: v.views + Math.floor(Math.random() * 5) // имитация просмотров
+      views: (v.views || 50) + Math.floor(Math.random() * 8)
     }));
   }
 
   applyFilters(vacancies, filters) {
     return vacancies.filter(v => {
-      const matchQuery = !filters.query || 
-        v.title.toLowerCase().includes(filters.query.toLowerCase()) ||
-        v.company.toLowerCase().includes(filters.query.toLowerCase());
-      
-      const matchCity = !filters.city || 
-        v.city.toLowerCase().includes(filters.city.toLowerCase());
-      
-      const matchSalary = !filters.minSalary || v.salary >= filters.minSalary;
-      
+      const matchQuery = !filters.query ||
+        (v.title && v.title.toLowerCase().includes(filters.query.toLowerCase())) ||
+        (v.company && v.company.toLowerCase().includes(filters.query.toLowerCase()));
+
+      const matchCity = !filters.city ||
+        (v.city && v.city.toLowerCase().includes(filters.city.toLowerCase()));
+
+      const matchSalary = !filters.minSalary || (v.salary && v.salary >= Number(filters.minSalary));
+
       return matchQuery && matchCity && matchSalary;
     });
   }
 
-  normalizeExternalData(data) {
-    // Адаптируем внешние данные под нашу структуру
-    return data.map((item, index) => ({
+  applySort(vacancies, sortBy) {
+    const copy = [...vacancies];
+    if (sortBy === 'salary-desc') {
+      return copy.sort((a, b) => (b.salary || 0) - (a.salary || 0));
+    }
+    if (sortBy === 'salary-asc') {
+      return copy.sort((a, b) => (a.salary || 0) - (b.salary || 0));
+    }
+    if (sortBy === 'views-desc') {
+      return copy.sort((a, b) => (b.views || 0) - (a.views || 0));
+    }
+    return copy;
+  }
+
+  normalizeExternalData(items) {
+    return items.map((item, index) => ({
       id: item.id || index + 1000,
-      title: item.title || 'Вакансия',
-      company: item.company || 'Компания',
-      salary: item.salary || 80000,
-      city: item.location || 'Москва',
-      description: item.description || 'Описание вакансии...',
-      requirements: ['Опыт работы', 'Знание технологий'],
+      title: item.title || 'Вакансия в IT',
+      company: item.brand || 'Компания',
+      salary: Math.floor(Math.random() * 120000) + 60000,
+      city: ['Москва', 'Санкт-Петербург', 'Удаленно', 'Новосибирск'][index % 4],
+      description: item.description || 'Интересная позиция с хорошими условиями.',
+      requirements: ['Опыт работы', 'Знание современных технологий'],
       type: 'full-time',
-      views: Math.floor(Math.random() * 200) + 50
+      views: Math.floor(Math.random() * 300) + 30
     }));
   }
 
-  // Имитация отправки отклика (серверная часть замокана)
   async applyToVacancy(vacancyId) {
-    console.log(`[MOCK SERVER] Отклик отправлен на вакансию #${vacancyId}`);
-    // В реальном проекте здесь был бы POST-запрос
-    return { success: true, message: 'Отклик успешно отправлен!' };
+    console.log(`[MOCK SERVER] Отклик на вакансию #${vacancyId} успешно отправлен`);
+    return { success: true, message: 'Отклик отправлен! Работодатель свяжется с вами в течение 2 дней.' };
   }
 }

@@ -112,6 +112,7 @@
             <input type="number" id="min-salary" placeholder="от 50000"
               style="padding:8px; width:140px; border-radius:6px; border:1px solid #ddd;">
           </div>
+          
           <!-- ИНДИКАТОР ЗАГРУЗКИ -->
           <div id="loading-indicator" class="loading" style="display: none; text-align: center; padding: 60px 20px;">
             <div class="spinner"></div>
@@ -148,6 +149,7 @@
       <!-- Советы для соискателей -->
       <section class="tips" id="tips">
         <div class="tips__container">
+
           <!-- Основные карточки советов -->
           <div class="tips__list">
             <div class="tip-card">
@@ -238,10 +240,10 @@
         <button class="modal__close" data-close="detail-modal">✕</button>
       </div>
       <div class="modal__content" id="detail-content">
-        <!-- JS будет заполнять сюда динамический контент -->
       </div>
     </div>
   </div>
+
   <!-- МОДАЛЬНОЕ ОКНО ДЛЯ СОВЕТОВ -->
   <div id="tip-modal" class="modal-backdrop" style="display: none;">
     <div class="modal" style="max-width: 560px;">
@@ -250,10 +252,10 @@
         <button class="modal__close" data-close="tip-modal">✕</button>
       </div>
       <div class="modal__content" id="tip-modal-content">
-        <!-- JS будет заполнять заголовок и текст -->
       </div>
     </div>
   </div>
+
   <!-- МОДАЛЬНОЕ ОКНО "ТРЕБУЕТСЯ АВТОРИЗАЦИЯ" -->
   <div id="auth-required-modal" class="modal-backdrop" style="display: none;">
     <div class="modal" style="max-width: 420px;">
@@ -276,7 +278,7 @@
     </div>
   </div>
 
-  <!-- ШАБЛОН КАРТОЧКИ ВАКАНСИИ (скрытый) -->
+  <!-- ШАБЛОН КАРТОЧКИ ВАКАНСИИ -->
 <template id="vacancy-template">
   <div class="vacancy-row">
     <div class="vacancy-row__title"></div>

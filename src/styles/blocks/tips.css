@@ -1,0 +1,98 @@
+.tips {
+  padding: 80px 20px;
+  background: #f8fafc;
+}
+
+.tips__container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+}
+
+.tips__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.tip-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.tip-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.tip-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.tip-card__content {
+  padding: 24px;
+}
+
+.tip-card__content h3 {
+  font-size: 19px;
+  margin-bottom: 12px;
+  color: var(--color-text);
+}
+
+.tip-card__content p {
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.tips__sidebar {
+  background: linear-gradient(135deg, #1e40af, #3b82f6);
+  color: white;
+  border-radius: 16px;
+  padding: 40px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+}
+
+.tips__sidebar h3 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.tips__sidebar p {
+  margin-bottom: 32px;
+  opacity: 0.95;
+}
+
+.tips__sidebar button {
+  background: #f97316;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tips__sidebar button:hover {
+  background: #ea580c;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 992px) {
+  .tips__container {
+    grid-template-columns: 1fr;
+  }
+}

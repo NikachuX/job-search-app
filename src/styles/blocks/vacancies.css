@@ -1,0 +1,68 @@
+.vacancies {
+  padding: 80px 20px;
+  background: white;
+}
+
+.vacancies__container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+.vacancies__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.vacancies__list {
+  display: grid;
+  gap: 12px;
+}
+
+.vacancy-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 80px;
+  align-items: center;
+  padding: 20px 24px;
+  background: #f8fafc;
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.vacancy-row:hover {
+  background: #f0f9ff;
+  transform: translateX(4px);
+}
+
+.vacancy-row__title {
+  font-weight: 600;
+  font-size: 17px;
+}
+
+.vacancy-row__salary {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.vacancy-row__city {
+  color: #64748b;
+}
+
+.vacancy-row__btn {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .vacancy-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    text-align: center;
+  }
+}

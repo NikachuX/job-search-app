@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "title": "Frontend-разработчик (React)",
+    "company": "TechVision",
+    "salary": 150000,
+    "city": "Москва",
+    "description": "Разработка современного интерфейса для SaaS-платформы. Работа с React, Redux, TypeScript.",
+    "requirements": ["React", "TypeScript", "Redux", "Git"],
+    "type": "full-time",
+    "views": 124
+  },
+  {
+    "id": 2,
+    "title": "Веб-дизайнер",
+    "company": "CreativeFlow",
+    "salary": 95000,
+    "city": "Санкт-Петербург",
+    "description": "Создание UI/UX для мобильных приложений и веб-сервисов.",
+    "requirements": ["Figma", "Adobe XD", "Принципы UX"],
+    "type": "full-time",
+    "views": 87
+  },
+  {
+    "id": 3,
+    "title": "Backend-разработчик (Node.js)",
+    "company": "DataSphere",
+    "salary": 180000,
+    "city": "Удаленно",
+    "description": "Разработка API и серверной логики на Node.js и PostgreSQL.",
+    "requirements": ["Node.js", "Express", "PostgreSQL", "Docker"],
+    "type": "full-time",
+    "views": 203
+  },
+  {
+    "id": 4,
+    "title": "Менеджер по продажам IT-решений",
+    "company": "GlobalMarket",
+    "salary": 85000,
+    "city": "Екатеринбург",
+    "description": "Активные продажи CRM-систем корпоративным клиентам.",
+    "requirements": ["Опыт продаж от 1 года", "Холодные звонки"],
+    "type": "full-time",
+    "views": 56
+  },
+  {
+    "id": 5,
+    "title": "Маркетолог digital",
+    "company": "StarMedia",
+    "salary": 110000,
+    "city": "Москва",
+    "description": "Продвижение бренда в соцсетях и контекстной рекламе.",
+    "requirements": ["Яндекс.Директ", "Google Ads", "SMM"],
+    "type": "full-time",
+    "views": 142
+  },
+  {
+    "id": 6,
+    "title": "Fullstack разработчик",
+    "company": "InnoSoft",
+    "salary": 170000,
+    "city": "Новосибирск",
+    "description": "Разработка веб-приложений от идеи до релиза.",
+    "requirements": ["React", "Node.js", "MongoDB"],
+    "type": "full-time",
+    "views": 98
+  },
+  {
+    "id": 7,
+    "title": "HR-менеджер по IT-рекрутингу",
+    "company": "TalentHub",
+    "salary": 90000,
+    "city": "Казань",
+    "description": "Поиск и закрытие IT-вакансий.",
+    "requirements": ["Опыт рекрутинга IT-специалистов"],
+    "type": "full-time",
+    "views": 67
+  },
+  {
+    "id": 8,
+    "title": "Тестировщик (Manual + Auto)",
+    "company": "QualityLab",
+    "salary": 120000,
+    "city": "Удаленно",
+    "description": "Тестирование веб-приложений, написание автотестов.",
+    "requirements": ["Postman", "Selenium", "TestRail"],
+    "type": "full-time",
+    "views": 134
+  }
+]

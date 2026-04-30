@@ -1,10 +1,17 @@
-import { defineConfig } from 'vite';
-
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-  server: {
-    open: true,     
-    port: 3000,     
-  },
   base: '/job-search-app/',
-});
+  server: {
+    open: true,
+    port: 3000,
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: 'index.html',
+        about: 'about.html',
+      }
+    }
+  }
+})

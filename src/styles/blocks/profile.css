@@ -1,0 +1,348 @@
+/* src/styles/blocks/profile.css */
+
+.profile {
+  padding: 40px 20px;
+  background: #f8fafc;
+  min-height: calc(100vh - 140px);
+}
+
+.profile__container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
+}
+
+.profile__sidebar {
+  background: white;
+  border-radius: 16px;
+  padding: 32px 24px;
+  height: fit-content;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 100px;
+}
+
+.profile__user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #eee;
+}
+
+.profile__avatar {
+  width: 72px;
+  height: 72px;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.profile__user-info {
+  flex: 1;
+  min-width: 0; /* важно для обрезки */
+}
+
+.profile__user-info h2 {
+  margin: 0 0 4px 0;
+  font-size: 20px;
+  line-height: 1.2;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.profile__email {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  word-break: break-all;
+  overflow-wrap: break-word;
+  line-height: 1.3;
+}
+
+/* ==================== ТАБЫ ==================== */
+
+.profile__tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.profile__tab {
+  padding: 14px 20px;
+  text-align: left;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+}
+
+.profile__tab:hover {
+  background: #f1f5f9;
+}
+
+.profile__tab.active {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* Badge (счётчик) */
+.profile__tab .badge {
+  background: rgba(255, 255, 255, 0.9);
+  color: #1e40af;                    /* тёмно-синий */
+  font-size: 13px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  min-width: 20px;
+  text-align: center;
+  line-height: 1;
+  margin-left: 12px;
+}
+
+/* Когда вкладка активная — делаем badge контрастнее */
+.profile__tab.active .badge {
+  background: white;
+  color: var(--color-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* Кнопка выхода */
+.profile__logout {
+  width: 100%;
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
+/* Контент */
+.profile__content {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  min-height: 600px;
+}
+
+.profile__tab-content {
+  display: none;
+}
+
+.profile__tab-content.active {
+  display: block;
+}
+
+.profile__tab-content h1 {
+  margin-bottom: 32px;
+  color: var(--color-text);
+}
+
+/* Форма */
+#profile-form label {
+  display: block;
+  margin: 20px 0 8px;
+  font-weight: 500;
+}
+
+#profile-form input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+/* Списки */
+.applications-list,
+#favorites-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.btn-primary,
+.profile__content button:not(.profile__logout) {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 16px;
+}
+
+.btn-primary:hover,
+.profile__content button:not(.profile__logout):hover {
+  background: #1e40af;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.btn-secondary {
+  background: #64748b;
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 16px;
+  margin-left: 12px;
+}
+
+.btn-secondary:hover {
+  background: #475569;
+  transform: translateY(-2px);
+}
+
+/* Кнопка "Удалить аккаунт" — опасное действие */
+#delete-account {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 30px;
+}
+
+#delete-account:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+}
+
+/* Улучшение формы профиля */
+#profile-form {
+  max-width: 520px;
+}
+
+#profile-form label {
+  display: block;
+  margin: 20px 0 8px 0;
+  font-weight: 600;
+  color: #1e2937;
+}
+
+#profile-form input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: border 0.2s;
+}
+
+#profile-form input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Кнопки в разделе резюме */
+.resume-editor {
+  max-width: 700px;
+}
+
+#resume-text {
+  width: 100%;
+  min-height: 320px;
+  padding: 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 15px;
+  line-height: 1.6;
+  resize: vertical;
+  font-family: inherit;
+}
+
+#resume-text:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+@media (max-width: 992px) {
+  .profile__container {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .profile__sidebar {
+    position: static;
+    padding: 24px;
+  }
+
+  .profile__content {
+    padding: 28px 24px;
+  }
+
+  /* Улучшаем отображение списка откликов на мобильных */
+  .applications-list .vacancy-row,
+  #favorites-list .vacancy-row {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+    text-align: left;
+    padding: 20px;
+  }
+
+  .vacancy-row__title {
+    font-size: 17px;
+  }
+
+  .vacancy-row__salary {
+    font-size: 18px;
+  }
+
+  /* Делаем отступы комфортнее */
+  .profile__tab-content h1 {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 576px) {
+  .profile__content {
+    padding: 24px 20px;
+  }
+
+  .profile__sidebar {
+    padding: 20px;
+  }
+
+  /* Ещё больше улучшаем карточки откликов */
+  .applications-list .vacancy-row {
+    padding: 18px 20px;
+  }
+
+  .applications-list .vacancy-row > div {
+    margin-bottom: 8px;
+  }
+
+  /* Убираем жёсткую ширину действий */
+  .vacancy-row__actions {
+    justify-content: flex-start !important;
+  }
+}

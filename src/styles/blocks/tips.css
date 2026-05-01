@@ -91,6 +91,25 @@
   transform: translateY(-3px);
 }
 
+.tips__sidebar-btn {
+    background: #f97316;
+    color: white;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.tips__sidebar-btn:hover {
+    background: #ea580c;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4);
+}
+
 @media (max-width: 992px) {
   .tips__container {
     grid-template-columns: 1fr;

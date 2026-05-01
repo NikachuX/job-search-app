@@ -2,6 +2,11 @@
 @import './base/reset.css';
 @import './base/variables.css';
 
+/* utils */
+@import './utils/layout.css';
+@import './utils/buttons.css';
+@import './utils/animations.css';
+
 /* blocks */
 @import './blocks/header.css';
 @import './blocks/hero.css';
@@ -9,6 +14,8 @@
 @import './blocks/vacancies.css';
 @import './blocks/companies.css';
 @import './blocks/tips.css';
+@import './blocks/modals.css';
+@import './blocks/profile.css';
 
 .footer {
   background: #111;
@@ -17,7 +24,6 @@
   padding: 20px;
 }
 
-/* Дополнительные стили для tips и общие улучшения */
 .tips__container h2,
 .vacancies__header h2,
 .companies__container h2 {
@@ -26,28 +32,15 @@
   color: var(--color-text);
 }
 
-/* Компании — сделаем красивее */
-.companies__list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
+.favorite-btn {
+  background: transparent !important;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
 }
 
-.company-card {
-  background: white;
-  padding: 28px 20px;
-  border-radius: 12px;
-  text-align: center;
-  font-weight: 600;
-  font-size: 18px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  transition: 0.3s;
-}
-
-.company-card:hover {
-  background: var(--color-primary);
-  color: white;
-  transform: translateY(-4px);
+.favorite-btn.active {
+  color: #ef4444;
+  border-color: #ef4444;
 }
 
 body {
@@ -65,183 +58,6 @@ h2 {
   color: #1e2937;
 }
 
-.container {
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* Улучшения для всех секций */
-section {
-  scroll-margin-top: 80px;
-}
-
-/* Кнопки по всему сайту */
-button {
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  transform: translateY(-2px);
-}
-
-/* Modal styles */
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.65);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.2s ease;
-}
-
-.modal {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-  width: 90%;
-  max-width: 460px;
-  max-height: 90vh;
-  overflow-y: auto;
-  animation: modalPop 0.3s ease;
-}
-
-.modal__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px 28px 16px;
-  border-bottom: 1px solid #eee;
-}
-
-.modal__header h3 {
-  margin: 0;
-  font-size: 22px;
-  color: var(--color-text);
-}
-
-.modal__close {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #64748b;
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: 0.2s;
-}
-
-.modal__close:hover {
-  background: #f1f5f9;
-  color: #ef4444;
-}
-
-.modal__content {
-  padding: 28px;
-}
-
-.modal-input {
-  width: 100%;
-  padding: 14px 16px;
-  margin-bottom: 16px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 16px;
-}
-
-.modal-input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-}
-
-.modal-submit {
-  width: 100%;
-  background: var(--color-primary);
-  color: white;
-  border: none;
-  padding: 14px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 8px;
-}
-
-.modal-submit:hover {
-  background: #1e40af;
-  transform: translateY(-2px);
-}
-
-/* Анимации */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes modalPop {
-  from {
-    opacity: 0;
-    transform: scale(0.92) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-/* Дополнительно для vacancy-row__actions */
-.vacancy-row__actions {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-}
-
-.vacancy-row__actions .vacancy-row__btn {
-  padding: 8px 14px;
-  font-size: 13px;
-}
-
-.favorite-btn {
-  background: transparent !important;
-  color: #64748b;
-  border: 1px solid #cbd5e1;
-}
-
-.favorite-btn.active {
-  color: #ef4444;
-  border-color: #ef4444;
-}
-
-/* Индикатор загрузки */
-.loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.spinner {
-  width: 48px;
-  height: 48px;
-  border: 5px solid #e2e8f0;
-  border-top: 5px solid var(--color-primary);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 16px;
-}
-
-
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
 
 /* Адаптив для очень маленьких экранов */
 @media (max-width: 576px) {

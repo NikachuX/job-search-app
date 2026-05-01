@@ -59,6 +59,17 @@
   font-size: 14px;
 }
 
+.vacancy-row__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.vacancy-row__actions .vacancy-row__btn {
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
 @media (max-width: 768px) {
   .vacancy-row {
     grid-template-columns: 1fr;

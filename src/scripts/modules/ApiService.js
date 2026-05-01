@@ -1,6 +1,6 @@
 export class ApiService {
   constructor() {
-    this.mockUrl = '/src/data/mock-vacancies.json';
+    this.mockUrl = './src/data/mock-vacancies.json';
     this.externalApi = 'https://dummyjson.com/products?limit=20';
   }
 

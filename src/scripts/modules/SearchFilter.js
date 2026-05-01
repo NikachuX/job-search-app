@@ -1,4 +1,3 @@
-// src/js/modules/SearchFilter.js
 export class SearchFilter {
   constructor() {
     this.debounceTimer = null;

@@ -1,4 +1,3 @@
-// src/js/modules/Modal.js
 export class Modal {
     constructor() {
         this.bindCloseEvents();
@@ -46,8 +45,7 @@ export class Modal {
 
         this.show('detail-modal');
     }
-
-    // Новый метод специально для советов
+    
     showTip(title, contentHTML) {
         const modal = document.getElementById('tip-modal');
         const titleEl = document.getElementById('tip-modal-title');

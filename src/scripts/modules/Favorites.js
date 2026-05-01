@@ -1,4 +1,3 @@
-// src/js/modules/Favorites.js
 export class Favorites {
     constructor() {
         this.key = 'jobfinder_favorites';

@@ -27,10 +27,32 @@ export class Auth {
     }
 
     logout() {
+        // ПОЛНАЯ ОЧИСТКА ВСЕХ ДАННЫХ ПОЛЬЗОВАТЕЛЯ
+        const keysToRemove = [
+            'jobfinder_logged_in',
+            'jobfinder_username',
+            'jobfinder_email',
+            'jobfinder_phone',
+            'jobfinder_city',
+            'jobfinder_favorites',
+            'jobfinder_applications',
+            'jobfinder_resume'
+        ];
+
+        keysToRemove.forEach(key => {
+            localStorage.removeItem(key);
+        });
+
         this.isLoggedIn = false;
         this.username = null;
-        localStorage.removeItem('jobfinder_logged_in');
-        localStorage.removeItem('jobfinder_username');
-        this.updateUI();
+
+        console.log('👋 Аккаунт полностью сброшен (localStorage очищен)');
+        
+        // Перезагружаем текущую страницу, чтобы всё обновилось
+        window.location.href = './index.html';
     }
+
+    getUsername() {
+    return this.username || localStorage.getItem('jobfinder_username') || 'Пользователь';
+}
 }

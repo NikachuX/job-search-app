@@ -1,20 +1,28 @@
 .companies__list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 20px;
 }
 
 .company-card {
-  background: #fff;
-  padding: 30px;
+  background: white;
+  padding: 28px 20px;
   border-radius: 12px;
   text-align: center;
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 18px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   transition: 0.3s;
 }
 
 .company-card:hover {
   background: var(--color-primary);
   color: white;
+}
+
+.company-card:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: translateY(-4px);
 }
 

@@ -12,22 +12,21 @@
   <header class="header">
     <div class="container header__container">
       <a href="#">
-      <div class="header__logo">
-        <!-- Inline SVG иконка брифкейса -->
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M20 7H4C2.89543 7 2 7.89543 2 9V17C2 18.1046 2.89543 19 4 19H20C21.1046 19 22 18.1046 22 17V9C22 7.89543 21.1046 7 20 7Z"
-            stroke="currentColor" stroke-width="2" />
-          <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" stroke="currentColor"
-            stroke-width="2" />
-        </svg>
-        JobFinder
-      </div>
+        <div class="header__logo">
+          <!-- Inline SVG иконка брифкейса -->
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M20 7H4C2.89543 7 2 7.89543 2 9V17C2 18.1046 2.89543 19 4 19H20C21.1046 19 22 18.1046 22 17V9C22 7.89543 21.1046 7 20 7Z"
+              stroke="currentColor" stroke-width="2" />
+            <path d="M16 7V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V7" stroke="currentColor"
+              stroke-width="2" />
+          </svg>
+          JobFinder
+        </div>
       </a>
 
       <nav class="header__nav" id="header-nav">
         <a href="#vacancies" class="header__link">Вакансии</a>
-        <a href="#companies" class="header__link">Компании</a>
         <a href="#tips" class="header__link">Советы</a>
         <a href="about.html" class="header__link">О сервисе</a>
       </nav>
@@ -37,9 +36,10 @@
         <button class="header__login" id="login-btn">Вход</button>
         <button class="header__register" id="register-btn">Регистрация</button>
 
-        <!-- Для авторизованного пользователя (скрыто по умолчанию) -->
+        <!-- Для авторизованного пользователя -->
         <div id="user-panel" style="display: none; align-items: center; gap: 12px;">
-          <span id="username-display" style="font-weight: 500; color: var(--color-primary);"></span>
+          <a href="profile.html"><span id="username-display"
+              style="font-weight: 500; color: var(--color-primary);"></span></a>
           <button id="logout-btn"
             style="background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">
             Выход
@@ -65,18 +65,18 @@
           <form class="search">
             <input type="text" placeholder="Должность" class="search__input" />
             <input type="text" placeholder="Город или регион" class="search__input" />
-            <button type="submit" class="search__button" onclick="document.getElementById('vacancies').scrollIntoView({behavior: 'smooth'});">Найти</button>
+            <button type="submit" class="search__button"
+              onclick="document.getElementById('vacancies').scrollIntoView({behavior: 'smooth'});">Найти</button>
           </form>
         </div>
 
-        <!-- Правая иллюстрация (сгенерированная) -->
         <div class="hero__illustration">
           <img src="src/assets/hero-illustration.jpg" alt="Найдите работу своей мечты" />
         </div>
       </div>
     </section>
     <!-- Features -->
-    <section class="features">
+    <!-- <section class="features">
       <div class="features__container">
         <div class="features__item">
           <div class="features__icon">🔍</div>
@@ -96,14 +96,16 @@
           <p>Полезные статьи и рекомендации</p>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- Популярные вакансии -->
     <section class="vacancies" id="vacancies">
       <div class="vacancies__container">
         <div class="vacancies__header">
           <h2>Популярные вакансии</h2>
-          <button class="vacancy-row__btn">Смотреть все вакансии</button>
+          <button id="show-all-vacancies" class="vacancy-row__btn">
+            Смотреть все вакансии
+          </button>
         </div>
         <div class="filters"
           style="margin-bottom: 24px; display: flex; gap: 16px; flex-wrap: wrap; align-items: center;">
@@ -112,7 +114,7 @@
             <input type="number" id="min-salary" placeholder="от 50000"
               style="padding:8px; width:140px; border-radius:6px; border:1px solid #ddd;">
           </div>
-          
+
           <!-- ИНДИКАТОР ЗАГРУЗКИ -->
           <div id="loading-indicator" class="loading" style="display: none; text-align: center; padding: 60px 20px;">
             <div class="spinner"></div>
@@ -135,7 +137,7 @@
     </section>
 
 
-    <!-- Лучшие компании -->
+    <!-- Лучшие компании
     <section class="companies" id="companies">
       <div class="companies__container">
         <h2>Лучшие компании</h2>
@@ -147,45 +149,48 @@
         </div>
         <button class="vacancy-row__btn" style="margin: 30px auto 0; display: block;">Все компании</button>
       </div>
-      <!-- Советы для соискателей -->
-      <section class="tips" id="tips">
-        <div class="tips__container">
+    </section> -->
+    <!-- Советы для соискателей -->
+    <section class="tips" id="tips">
+      <div class="tips__container">
 
-          <!-- Основные карточки советов -->
-          <div class="tips__list">
-            <div class="tip-card">
-              <img src="src/assets/tip1.jpg" alt="Как пройти собеседование">
-              <div class="tip-card__content">
-                <h3>Как пройти собеседование успешно</h3>
-                <p>Полезные советы и распространённые ошибки, которых стоит избегать.</p>
-              </div>
-            </div>
-
-            <div class="tip-card">
-              <img src="src/assets/tip2.jpg" alt="Идеальное резюме">
-              <div class="tip-card__content">
-                <h3>Составляем идеальное резюме</h3>
-                <p>Что писать в резюме, чтобы recruiter сразу обратил внимание.</p>
-              </div>
-            </div>
-
-            <div class="tip-card">
-              <img src="src/assets/tip3.jpg" alt="Навыки 2026">
-              <div class="tip-card__content">
-                <h3>Навыки, востребованные в 2026 году</h3>
-                <p>Тренды рынка труда и какие навыки помогут выделиться.</p>
-              </div>
+        <!-- Основные карточки советов -->
+        <div class="tips__list">
+          <div class="tip-card">
+            <img src="src/assets/tip1.jpg" alt="Как пройти собеседование">
+            <div class="tip-card__content">
+              <h3>Как пройти собеседование успешно</h3>
+              <p>Полезные советы и распространённые ошибки, которых стоит избегать.</p>
             </div>
           </div>
 
-          <!-- Боковая карточка «Создайте резюме» -->
-          <div class="tips__sidebar">
-            <h3>Создайте резюме<br>и получите шанс быть<br>замеченным работодателем!</h3>
-            <p>Заполните форму и мы поможем вам составить профессиональное резюме за несколько минут.</p>
-            <button>Заполнить резюме</button>
+          <div class="tip-card">
+            <img src="src/assets/tip2.jpg" alt="Идеальное резюме">
+            <div class="tip-card__content">
+              <h3>Составляем идеальное резюме</h3>
+              <p>Что писать в резюме, чтобы recruiter сразу обратил внимание.</p>
+            </div>
+          </div>
+
+          <div class="tip-card">
+            <img src="src/assets/tip3.jpg" alt="Навыки 2026">
+            <div class="tip-card__content">
+              <h3>Навыки, востребованные в 2026 году</h3>
+              <p>Тренды рынка труда и какие навыки помогут выделиться.</p>
+            </div>
           </div>
         </div>
-      </section>
+
+        <!-- Боковая карточка «Создайте резюме» -->
+        <div class="tips__sidebar">
+          <h3>Создайте резюме<br>и получите шанс быть<br>замеченным работодателем!</h3>
+          <p>Заполните форму и мы поможем вам составить профессиональное резюме за несколько минут.</p>
+          <button id="fill-resume-btn" class="tips__sidebar-btn">
+            Заполнить резюме
+          </button>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -280,18 +285,18 @@
   </div>
 
   <!-- ШАБЛОН КАРТОЧКИ ВАКАНСИИ -->
-<template id="vacancy-template">
-  <div class="vacancy-row">
-    <div class="vacancy-row__title"></div>
-    <div class="vacancy-row__salary"></div>
-    <div class="vacancy-row__city"></div>
-    <div class="vacancy-row__actions">
-      <button class="vacancy-row__btn favorite-btn" title="В избранное">♡</button>
-      <button class="vacancy-row__btn apply-btn">Откликнуться</button>
-      <button class="vacancy-row__btn detail-btn">Подробнее</button>
+  <template id="vacancy-template">
+    <div class="vacancy-row">
+      <div class="vacancy-row__title"></div>
+      <div class="vacancy-row__salary"></div>
+      <div class="vacancy-row__city"></div>
+      <div class="vacancy-row__actions">
+        <button class="vacancy-row__btn favorite-btn" title="В избранное">♡</button>
+        <button class="vacancy-row__btn apply-btn">Откликнуться</button>
+        <button class="vacancy-row__btn detail-btn">Подробнее</button>
+      </div>
     </div>
-  </div>
-</template>
+  </template>
 </body>
 
 </html>

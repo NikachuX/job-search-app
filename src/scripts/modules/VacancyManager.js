@@ -1,14 +1,15 @@
-// src/js/modules/VacancyManager.js
 import { ApiService } from './ApiService.js';
 import { Favorites } from './Favorites.js';
 import { Modal } from './Modal.js';
+import { Applications } from './Applications.js';
 
 export class VacancyManager {
-    constructor() {                    // ← убираем параметр auth из конструктора
+    constructor() {
         this.api = new ApiService();
         this.favorites = new Favorites();
+        this.applications = new Applications();
         this.modal = new Modal();
-        this.auth = null;                // ← будет присвоено позже
+        this.auth = null;
         this.currentVacancies = [];
         this.filteredVacancies = [];
         this.currentPage = 1;
@@ -16,7 +17,7 @@ export class VacancyManager {
         this.currentFilters = {};
     }
 
-    async init(auth) {                 // ← теперь init принимает auth
+    async init(auth) {
         if (auth) {
             this.auth = auth;
         }
@@ -27,7 +28,7 @@ export class VacancyManager {
     }
 
     async loadVacancies(filters = {}) {
-        this.showLoading();                    // ← показываем индикатор
+        this.showLoading();
 
         try {
             this.currentFilters = { ...this.currentFilters, ...filters };
@@ -38,7 +39,7 @@ export class VacancyManager {
             console.error('Ошибка загрузки вакансий:', error);
             this.filteredVacancies = [];
         } finally {
-            this.hideLoading();                  // ← скрываем в любом случае
+            this.hideLoading();
             this.renderVacancies();
         }
     }
@@ -60,7 +61,7 @@ export class VacancyManager {
             return;
         }
 
-        container.innerHTML = ''; // очищаем контейнер
+        container.innerHTML = '';
 
         const template = document.getElementById('vacancy-template');
         if (!template) {
@@ -128,7 +129,6 @@ export class VacancyManager {
         document.addEventListener('click', async (e) => {
             const target = e.target;
 
-            // === ЗАЩИЩЁННЫЕ ДЕЙСТВИЯ ===
             if (target.classList.contains('apply-btn')) {
                 if (!this.auth || !this.auth.isAuthenticated()) {
                     this.modal.show('auth-required-modal');
@@ -136,17 +136,22 @@ export class VacancyManager {
                 }
 
                 const id = parseInt(target.dataset.id);
-                await this.api.applyToVacancy(id);
+                const vacancy = this.currentVacancies.find(v => v.id === id);
 
-                target.textContent = '✓ Отклик отправлен';
-                target.style.background = '#10b981';
-                target.disabled = true;
+                if (vacancy) {
+                    const added = this.applications.add(vacancy);
 
-                setTimeout(() => {
-                    target.textContent = 'Откликнуться';
-                    target.style.background = '';
-                    target.disabled = false;
-                }, 3000);
+                    if (added) {
+                        target.textContent = '✓ Отклик отправлен';
+                        target.style.background = '#10b981';
+                        target.disabled = true;
+
+                        // Показываем уведомление
+                        this.showNotification('Отклик успешно отправлен!', 'success');
+                    } else {
+                        this.showNotification('Вы уже откликались на эту вакансию', 'info');
+                    }
+                }
             }
 
             if (target.classList.contains('favorite-btn')) {
@@ -157,10 +162,9 @@ export class VacancyManager {
 
                 const id = parseInt(target.dataset.id);
                 this.favorites.toggle(id);
-                this.renderVacancies(); // обновляем сердечки
+                this.renderVacancies();
             }
 
-            // === ОТКРЫТЫЕ ДЕЙСТВИЯ (без авторизации) ===
             if (target.classList.contains('detail-btn')) {
                 const id = parseInt(target.dataset.id);
                 const vacancy = this.currentVacancies.find(v => v.id === id);
@@ -168,7 +172,6 @@ export class VacancyManager {
             }
         });
 
-        // Поисковая форма
         const searchForm = document.querySelector('.search');
         if (searchForm) {
             searchForm.addEventListener('submit', async (e) => {
@@ -182,7 +185,6 @@ export class VacancyManager {
             });
         }
 
-        // Фильтры и сортировка
         const applyFiltersBtn = document.getElementById('apply-filters');
         const minSalaryInput = document.getElementById('min-salary');
         const sortSelect = document.getElementById('sort-select');
@@ -197,7 +199,6 @@ export class VacancyManager {
             });
         }
 
-        // Интерактивные советы
         document.querySelectorAll('.tip-card').forEach(card => {
             card.style.cursor = 'pointer';
 
@@ -228,7 +229,7 @@ export class VacancyManager {
     }
 
     showVacancyDetail(vacancy) {
-        this.modal.showDetail(vacancy);   // новый метод
+        this.modal.showDetail(vacancy);
     }
 
     showLoading() {
@@ -244,4 +245,19 @@ export class VacancyManager {
         if (loading) loading.style.display = 'none';
         if (vacanciesList) vacanciesList.style.display = 'block';
     }
+
+    showNotification(message, type = 'success') {
+    const notif = document.createElement('div');
+    notif.style.cssText = `
+        position: fixed; top: 20px; right: 20px; padding: 16px 24px;
+        border-radius: 8px; color: white; z-index: 10000;
+        background: ${type === 'success' ? '#10b981' : '#3b82f6'};
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        font-weight: 500;
+    `;
+    notif.textContent = message;
+    document.body.appendChild(notif);
+
+    setTimeout(() => notif.remove(), 3000);
+}
 }

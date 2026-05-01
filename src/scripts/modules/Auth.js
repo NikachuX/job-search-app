@@ -36,7 +36,8 @@ export class Auth {
             'jobfinder_city',
             'jobfinder_favorites',
             'jobfinder_applications',
-            'jobfinder_resume'
+            'jobfinder_resume',
+            'employer_my_vacancies'
         ];
 
         keysToRemove.forEach(key => {

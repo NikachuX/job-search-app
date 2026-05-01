@@ -11,7 +11,6 @@
 
 <body>
     <header class="header">
-        <!-- Тот же header, что и в index.html (будет подгружаться через JS) -->
         <div class="container header__container">
             <a href="./">
                 <div class="header__logo">
@@ -62,6 +61,10 @@
                     <button class="profile__tab" data-tab="favorites">Избранное <span id="fav-count"
                             class="badge">0</span></button>
                     <button class="profile__tab" data-tab="resume">Резюме</button>
+
+                    <!-- Новая вкладка -->
+                    <button class="profile__tab" data-tab="employer">Для работодателей</button>
+
                     <button class="profile__tab" data-tab="settings">Настройки</button>
                 </nav>
 
@@ -70,6 +73,7 @@
 
             <!-- Контент вкладок -->
             <div class="profile__content">
+
                 <!-- Вкладка Профиль -->
                 <div id="tab-profile" class="profile__tab-content active">
                     <h1>Личные данные</h1>
@@ -113,12 +117,81 @@
                     </div>
                 </div>
 
+                <!-- НОВАЯ ВКЛАДКА — Для работодателей -->
+                <div id="tab-employer" class="profile__tab-content">
+                    <h1>Для работодателей</h1>
+
+                    <div class="role-switcher">
+                        <button id="role-candidate" class="role-btn">Я соискатель</button>
+                        <button id="role-employer" class="role-btn active">Я работодатель</button>
+                    </div>
+
+                    <!-- Контент для режима работодателя -->
+                    <div id="employer-mode" class="employer-mode">
+
+                        <!-- Разместить новую вакансию -->
+                        <div class="employer-section">
+                            <h2>Разместить новую вакансию</h2>
+                            <div class="employer-form">
+                                <label>Должность *</label>
+                                <input type="text" id="new-vacancy-title"
+                                    placeholder="Например: Senior Frontend Developer" />
+
+                                <label>Компания</label>
+                                <input type="text" id="new-vacancy-company" placeholder="Название компании" />
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                    <div>
+                                        <label>Зарплата от (₽)</label>
+                                        <input type="number" id="new-vacancy-salary" placeholder="120000" />
+                                    </div>
+                                    <div>
+                                        <label>Город</label>
+                                        <input type="text" id="new-vacancy-city" placeholder="Москва / Удалённо" />
+                                    </div>
+                                </div>
+
+                                <label>Описание вакансии</label>
+                                <textarea id="new-vacancy-description" rows="5"
+                                    placeholder="Обязанности, требования, условия работы..."></textarea>
+
+                                <button id="publish-vacancy-btn" class="btn-primary">Опубликовать вакансию</button>
+                            </div>
+                        </div>
+
+                        <!-- Мои вакансии -->
+                        <div class="employer-section">
+                            <h2>Мои вакансии</h2>
+                            <div id="my-vacancies-list" class="employer-vacancies-list">
+                                <!-- JS заполнит -->
+                            </div>
+                        </div>
+
+                        <!-- Отклики на мои вакансии -->
+                        <div class="employer-section">
+                            <h2>Отклики на мои вакансии</h2>
+                            <div id="employer-applications-list" class="employer-applications-list">
+                                <!-- JS заполнит -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Сообщение для режима соискателя -->
+                    <div id="candidate-mode" class="employer-mode"
+                        style="display: none; text-align: center; padding: 80px 20px; color: #64748b;">
+                        <p style="font-size: 18px;">Вы сейчас в режиме соискателя</p>
+                        <p>Переключитесь на "Я работодатель", чтобы размещать вакансии и управлять откликами.</p>
+                    </div>
+                </div>
+
                 <!-- Вкладка Настройки -->
                 <div id="tab-settings" class="profile__tab-content">
                     <h1>Настройки</h1>
                     <p>Здесь будут настройки уведомлений, смена пароля и т.д. (мок)</p>
-                    <button id="delete-account" style="background:#ef4444; color:white;">Удалить аккаунт</button>
+                    <button id="delete-account" class="danger-btn">Удалить аккаунт</button>
                 </div>
+
             </div>
         </div>
     </main>

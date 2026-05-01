@@ -5,6 +5,7 @@ import { Modal } from './modules/Modal.js';
 import { Auth } from './modules/Auth.js';
 import { ProfileManager } from './modules/ProfileManager.js';
 
+
 class JobFinderApp {
   constructor() {
     this.auth = new Auth();

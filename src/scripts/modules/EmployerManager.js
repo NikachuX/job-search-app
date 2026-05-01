@@ -3,12 +3,13 @@ export class EmployerManager {
     constructor(auth) {
         this.auth = auth;
         this.keyMyVacancies = 'employer_my_vacancies';
-        this.currentRole = 'candidate'; // ← Изменено: по умолчанию соискатель
+        this.externalApiUrl = 'https://fakejobs-api.vercel.app/jobs';
+        this.currentRole = 'candidate'; // по умолчанию — соискатель
     }
 
     init() {
         this.bindRoleSwitcher();
-        this.switchRole(this.currentRole);   // теперь по умолчанию candidate
+        this.switchRole(this.currentRole);
         this.bindPublishVacancy();
     }
 
@@ -23,11 +24,9 @@ export class EmployerManager {
     switchRole(role) {
         this.currentRole = role;
 
-        // Переключаем активные кнопки
         document.getElementById('role-candidate')?.classList.toggle('active', role === 'candidate');
         document.getElementById('role-employer')?.classList.toggle('active', role === 'employer');
 
-        // Переключаем видимость блоков
         const employerMode = document.getElementById('employer-mode');
         const candidateMode = document.getElementById('candidate-mode');
 
@@ -36,7 +35,6 @@ export class EmployerManager {
             candidateMode.style.display = (role === 'candidate') ? 'block' : 'none';
         }
 
-        // Загружаем данные только когда переключаемся на работодателя
         if (role === 'employer') {
             this.loadMyVacancies();
             this.loadEmployerApplications();
@@ -44,11 +42,11 @@ export class EmployerManager {
     }
 
     // ====================== ПУБЛИКАЦИЯ ВАКАНСИИ ======================
-    bindPublishVacancy() {
+    async bindPublishVacancy() {
         const btn = document.getElementById('publish-vacancy-btn');
         if (!btn) return;
 
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
             const title = document.getElementById('new-vacancy-title').value.trim();
             const company = document.getElementById('new-vacancy-company').value.trim() || 'Моя Компания';
             const salary = Number(document.getElementById('new-vacancy-salary').value) || 0;
@@ -71,24 +69,77 @@ export class EmployerManager {
                 applicationsCount: 0
             };
 
+            // Показываем процесс
+            btn.disabled = true;
+            btn.textContent = 'Публикация...';
+
+            try {
+                // 1. Пытаемся отправить на внешний API (демонстрация POST)
+                await this.sendToExternalApi(newVacancy);
+                console.log('✅ Вакансия отправлена на внешний Fake Jobs API');
+            } catch (apiError) {
+                console.warn('⚠️ Не удалось отправить на внешний API (это нормально):', apiError.message);
+            }
+
+            // 2. В любом случае сохраняем локально
             this.addMyVacancy(newVacancy);
 
-            // Очистка формы
-            document.getElementById('new-vacancy-title').value = '';
-            document.getElementById('new-vacancy-company').value = '';
-            document.getElementById('new-vacancy-salary').value = '';
-            document.getElementById('new-vacancy-city').value = '';
-            document.getElementById('new-vacancy-description').value = '';
+            // Очищаем форму
+            this.clearForm();
 
             this.loadMyVacancies();
+
             this.showNotification('Вакансия успешно опубликована!', 'success');
+
+            // Возвращаем кнопку в исходное состояние
+            btn.disabled = false;
+            btn.textContent = 'Опубликовать вакансию';
+
         });
+    }
+
+    // Отправка POST запроса на внешний API
+    async sendToExternalApi(vacancy) {
+        const payload = {
+            title: vacancy.title,
+            type: "Full-Time",
+            location: vacancy.city,
+            description: vacancy.description,
+            salary: `${vacancy.salary} ₽`,
+            company: {
+                name: vacancy.company,
+                description: "Компания, разместившая вакансию через JobFinder",
+                contactEmail: "hr@company.com"
+            }
+        };
+
+        const response = await fetch(this.externalApiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            throw new Error(`API responded with status ${response.status}`);
+        }
+
+        return await response.json();
     }
 
     addMyVacancy(vacancy) {
         let vacancies = JSON.parse(localStorage.getItem(this.keyMyVacancies)) || [];
         vacancies.unshift(vacancy);
         localStorage.setItem(this.keyMyVacancies, JSON.stringify(vacancies));
+    }
+
+    clearForm() {
+        document.getElementById('new-vacancy-title').value = '';
+        document.getElementById('new-vacancy-company').value = '';
+        document.getElementById('new-vacancy-salary').value = '';
+        document.getElementById('new-vacancy-city').value = '';
+        document.getElementById('new-vacancy-description').value = '';
     }
 
     loadMyVacancies() {

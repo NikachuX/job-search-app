@@ -1,10 +1,9 @@
-// src/js/modules/EmployerManager.js
 export class EmployerManager {
     constructor(auth) {
         this.auth = auth;
         this.keyMyVacancies = 'employer_my_vacancies';
         this.externalApiUrl = 'https://fakejobs-api.vercel.app/jobs';
-        this.currentRole = 'candidate'; // по умолчанию — соискатель
+        this.currentRole = 'candidate'; 
     }
 
     init() {
@@ -41,7 +40,6 @@ export class EmployerManager {
         }
     }
 
-    // ====================== ПУБЛИКАЦИЯ ВАКАНСИИ ======================
     async bindPublishVacancy() {
         const btn = document.getElementById('publish-vacancy-btn');
         if (!btn) return;
@@ -74,31 +72,26 @@ export class EmployerManager {
             btn.textContent = 'Публикация...';
 
             try {
-                // 1. Пытаемся отправить на внешний API (демонстрация POST)
                 await this.sendToExternalApi(newVacancy);
                 console.log('✅ Вакансия отправлена на внешний Fake Jobs API');
             } catch (apiError) {
                 console.warn('⚠️ Не удалось отправить на внешний API (это нормально):', apiError.message);
             }
 
-            // 2. В любом случае сохраняем локально
             this.addMyVacancy(newVacancy);
 
-            // Очищаем форму
             this.clearForm();
 
             this.loadMyVacancies();
 
             this.showNotification('Вакансия успешно опубликована!', 'success');
 
-            // Возвращаем кнопку в исходное состояние
             btn.disabled = false;
             btn.textContent = 'Опубликовать вакансию';
 
         });
     }
 
-    // Отправка POST запроса на внешний API
     async sendToExternalApi(vacancy) {
         const payload = {
             title: vacancy.title,

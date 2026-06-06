@@ -77,18 +77,30 @@
                 <!-- Вкладка Профиль -->
                 <div id="tab-profile" class="profile__tab-content active">
                     <h1>Личные данные</h1>
-                    <form id="profile-form">
-                        <label>Имя</label>
-                        <input type="text" id="input-name" required />
+                    <form id="profile-form" novalidate>
+                        <div class="form-field">
+                            <label>Имя</label>
+                            <input type="text" id="input-name" required />
+                            <div id="input-name-error" class="error-message"></div>
+                        </div>
 
-                        <label>Email</label>
-                        <input type="email" id="input-email" required />
+                        <div class="form-field">
+                            <label>Email</label>
+                            <input type="email" id="input-email" required />
+                            <div id="input-email-error" class="error-message"></div>
+                        </div>
 
-                        <label>Телефон</label>
-                        <input type="tel" id="input-phone" placeholder="+7 (___) ___-__-__" />
+                        <div class="form-field">
+                            <label>Телефон</label>
+                            <input type="tel" id="input-phone" placeholder="+7 (999) 123-45-67" maxlength="18" />
+                            <div id="input-phone-error" class="error-message"></div>
+                        </div>
 
-                        <label>Город</label>
-                        <input type="text" id="input-city" />
+                        <div class="form-field">
+                            <label>Город</label>
+                            <input type="text" id="input-city" />
+                            <div id="input-city-error" class="error-message"></div>
+                        </div>
 
                         <button type="submit" class="btn-primary">Сохранить изменения</button>
                     </form>
@@ -133,29 +145,42 @@
                         <div class="employer-section">
                             <h2>Разместить новую вакансию</h2>
                             <div class="employer-form">
-                                <label>Должность *</label>
-                                <input type="text" id="new-vacancy-title"
-                                    placeholder="Например: Senior Frontend Developer" />
-
-                                <label>Компания</label>
-                                <input type="text" id="new-vacancy-company" placeholder="Название компании" />
-
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                                    <div>
-                                        <label>Зарплата от (₽)</label>
-                                        <input type="number" id="new-vacancy-salary" placeholder="120000" />
+                                <form id="publish-vacancy-form" novalidate>
+                                    <div class="form-field">
+                                        <label>Должность *</label>
+                                        <input type="text" id="new-vacancy-title"
+                                            placeholder="Например: Senior Frontend Developer" required />
+                                        <div id="new-vacancy-title-error" class="error-message"></div>
                                     </div>
-                                    <div>
-                                        <label>Город</label>
-                                        <input type="text" id="new-vacancy-city" placeholder="Москва / Удалённо" />
+
+                                    <div class="form-field">
+                                        <label>Компания</label>
+                                        <input type="text" id="new-vacancy-company" placeholder="Название компании" />
+                                        <div id="new-vacancy-company-error" class="error-message"></div>
                                     </div>
-                                </div>
 
-                                <label>Описание вакансии</label>
-                                <textarea id="new-vacancy-description" rows="5"
-                                    placeholder="Обязанности, требования, условия работы..."></textarea>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                        <div class="form-field">
+                                            <label>Зарплата от (₽)</label>
+                                            <input type="number" id="new-vacancy-salary" placeholder="120000" min="10000" />
+                                            <div id="new-vacancy-salary-error" class="error-message"></div>
+                                        </div>
+                                        <div class="form-field">
+                                            <label>Город</label>
+                                            <input type="text" id="new-vacancy-city" placeholder="Москва / Удалённо" />
+                                            <div id="new-vacancy-city-error" class="error-message"></div>
+                                        </div>
+                                    </div>
 
-                                <button id="publish-vacancy-btn" class="btn-primary">Опубликовать вакансию</button>
+                                    <div class="form-field">
+                                        <label>Описание вакансии *</label>
+                                        <textarea id="new-vacancy-description" rows="5"
+                                            placeholder="Обязанности, требования, условия работы..." required></textarea>
+                                        <div id="new-vacancy-description-error" class="error-message"></div>
+                                    </div>
+
+                                    <button type="submit" id="publish-vacancy-btn" class="btn-primary">Опубликовать вакансию</button>
+                                </form>
                             </div>
                         </div>
 

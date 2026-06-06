@@ -43,7 +43,7 @@ export class ProfileManager {
 
     bindTabSwitching() {
         const tabs = document.querySelectorAll('.profile__tab');
-        
+
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 // Убираем active у всех вкладок
@@ -95,24 +95,94 @@ export class ProfileManager {
         const form = document.getElementById('profile-form');
         if (!form) return;
 
+        // Заполняем текущие данные
         document.getElementById('input-name').value = this.auth.getUsername() || '';
         document.getElementById('input-email').value = localStorage.getItem('jobfinder_email') || '';
+        document.getElementById('input-phone').value = localStorage.getItem('jobfinder_phone') || '';
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
+            this.clearProfileErrors();
 
             const name = document.getElementById('input-name').value.trim();
             const email = document.getElementById('input-email').value.trim();
             const phone = document.getElementById('input-phone').value.trim();
             const city = document.getElementById('input-city').value.trim();
 
-            if (name) localStorage.setItem('jobfinder_username', name);
-            if (email) localStorage.setItem('jobfinder_email', email);
-            if (phone) localStorage.setItem('jobfinder_phone', phone);
-            if (city) localStorage.setItem('jobfinder_city', city);
+            let valid = true;
 
-            this.renderUserInfo();
-            this.showNotification('Данные успешно сохранены!', 'success');
+            // === ВАЛИДАЦИЯ ИМЕНИ ===
+            if (!name) {
+                this.showFieldError('input-name', 'Имя обязательно');
+                valid = false;
+            }
+
+            // === ВАЛИДАЦИЯ EMAIL ===
+            if (!email) {
+                this.showFieldError('input-email', 'Email обязателен');
+                valid = false;
+            } else if (!email.includes('@') || !email.includes('.')) {
+                this.showFieldError('input-email', 'Введите корректный email');
+                valid = false;
+            }
+
+            // === ВАЛИДАЦИЯ ТЕЛЕФОНА ===
+            if (phone) {
+                if (!this.validatePhone(phone)) {
+                    this.showFieldError('input-phone', 'Введите корректный номер телефона (+7XXXXXXXXXX или 8XXXXXXXXXX)');
+                    valid = false;
+                }
+            }
+
+            if (valid) {
+                if (name) localStorage.setItem('jobfinder_username', name);
+                if (email) localStorage.setItem('jobfinder_email', email);
+                if (phone) localStorage.setItem('jobfinder_phone', phone);
+                if (city) localStorage.setItem('jobfinder_city', city);
+
+                this.renderUserInfo();
+                this.showNotification('✅ Данные успешно сохранены!', 'success');
+            }
+        });
+    }
+
+    // Новый метод — валидация телефона
+    validatePhone(phone) {
+        // Убираем все нецифровые символы для проверки
+        const cleaned = phone.replace(/\D/g, '');
+
+        // Российские номера: 11 цифр (с 7 или 8 в начале) или 10 цифр
+        if (cleaned.length === 11) {
+            return cleaned.startsWith('7') || cleaned.startsWith('8');
+        }
+        if (cleaned.length === 10) {
+            return true; // например 9991234567
+        }
+
+        return false;
+    }
+
+    showFieldError(fieldId, message) {
+    const errorEl = document.getElementById(fieldId + '-error');
+    const input = document.getElementById(fieldId);
+    
+    if (errorEl) {
+        errorEl.textContent = message;
+        errorEl.classList.add('show');
+    }
+    if (input) input.classList.add('error');
+}
+
+    clearProfileErrors() {
+        const fields = ['input-name', 'input-email', 'input-phone', 'input-city'];
+        fields.forEach(fieldId => {
+            const errorEl = document.getElementById(fieldId + '-error');
+            const input = document.getElementById(fieldId);
+            if (errorEl) {
+                errorEl.textContent = '';
+                errorEl.classList.remove('show');
+            }
+            if (input) input.classList.remove('error');
         });
     }
 

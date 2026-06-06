@@ -58,14 +58,101 @@ class JobFinderApp {
     });
 
     // Логин
-    document.getElementById('login-submit')?.addEventListener('click', () => {
+    const loginForm = document.getElementById('login-form');
+    loginForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.clearErrors('login');
+
       const email = document.getElementById('login-email').value.trim();
-      if (email) {
+      const password = document.getElementById('login-password').value.trim();
+
+      let valid = true;
+
+      if (!email) {
+        this.showFieldError('login-email', 'Введите email');
+        valid = false;
+      } else if (!email.includes('@')) {
+        this.showFieldError('login-email', 'Введите корректный email');
+        valid = false;
+      }
+
+      if (!password) {
+        this.showFieldError('login-password', 'Введите пароль');
+        valid = false;
+      }
+
+      if (valid) {
         this.handleSuccessfulLogin(email);
-      } else {
-        alert('Введите email');
       }
     });
+
+    // === РЕГИСТРАЦИЯ ===
+    const registerForm = document.getElementById('register-form');
+    registerForm?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.clearErrors('register');
+
+      const name = document.getElementById('register-name').value.trim();
+      const email = document.getElementById('register-email').value.trim();
+      const password = document.getElementById('register-password').value.trim();
+
+      let valid = true;
+
+      if (email && !email.includes('@')) {
+        this.showFieldError('register-email', 'Введите корректный email');
+        valid = false;
+      }
+      if (!email) {
+        this.showFieldError('register-email', 'Email обязателен');
+        valid = false;
+      }
+      if (!password) {
+        this.showFieldError('register-password', 'Пароль обязателен');
+        valid = false;
+      } else if (password.length < 6) {
+        this.showFieldError('register-password', 'Пароль должен содержать минимум 6 символов');
+        valid = false;
+      }
+
+      if (valid) {
+        const result = this.auth.register(name, email, password);
+        if (result.success) {
+          this.modal.hide('register-modal');
+          this.updateHeaderUI();
+          this.showNotification('Регистрация успешна!', 'success');
+        } else {
+          this.showNotification(result.message, 'error');
+        }
+      }
+    });
+  }
+
+  // Вспомогательные методы
+  showFieldError(fieldId, message) {
+    const errorEl = document.getElementById(fieldId + '-error');
+    const input = document.getElementById(fieldId);
+    if (errorEl) errorEl.textContent = message;
+    if (input) input.classList.add('error');
+  }
+
+  clearErrors(prefix) {
+    document.querySelectorAll(`[id^="${prefix}"]`).forEach(el => {
+      if (el.id.endsWith('-error')) el.textContent = '';
+      else if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.classList.remove('error');
+    });
+  }
+
+  showNotification(message, type = 'success') {
+    const notif = document.createElement('div');
+    notif.style.cssText = `
+      position: fixed; top: 30px; right: 30px; padding: 16px 24px;
+      border-radius: 12px; color: white; z-index: 10000; font-weight: 500;
+      background: ${type === 'success' ? '#10b981' : '#3b82f6'};
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    `;
+    notif.textContent = message;
+    document.body.appendChild(notif);
+    setTimeout(() => notif.remove(), 3000);
   }
 
   handleSuccessfulLogin(email) {

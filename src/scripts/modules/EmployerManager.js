@@ -1,3 +1,4 @@
+// src/js/modules/EmployerManager.js
 export class EmployerManager {
     constructor(auth) {
         this.auth = auth;
@@ -40,21 +41,59 @@ export class EmployerManager {
         }
     }
 
-    async bindPublishVacancy() {
-        const btn = document.getElementById('publish-vacancy-btn');
-        if (!btn) return;
+    // ====================== ПУБЛИКАЦИЯ ВАКАНСИИ ======================
+    bindPublishVacancy() {
+        const form = document.getElementById('publish-vacancy-form');
+        if (!form) return;
 
-        btn.addEventListener('click', async () => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            this.clearVacancyErrors();
+
             const title = document.getElementById('new-vacancy-title').value.trim();
             const company = document.getElementById('new-vacancy-company').value.trim() || 'Моя Компания';
-            const salary = Number(document.getElementById('new-vacancy-salary').value) || 0;
+            const salaryInput = document.getElementById('new-vacancy-salary').value;
+            const salary = Number(salaryInput) || 0;
             const city = document.getElementById('new-vacancy-city').value.trim() || 'Не указан';
             const description = document.getElementById('new-vacancy-description').value.trim();
 
+            let valid = true;
+
+            // Валидация должности
             if (!title) {
-                alert('Пожалуйста, укажите должность');
-                return;
+                this.showFieldError('new-vacancy-title', 'Должность обязательна');
+                valid = false;
+            } else if (title.length < 3) {
+                this.showFieldError('new-vacancy-title', 'Название должности слишком короткое (минимум 3 символа)');
+                valid = false;
             }
+
+            // Валидация описания
+            if (!description) {
+                this.showFieldError('new-vacancy-description', 'Описание вакансии обязательно');
+                valid = false;
+            } else if (description.length < 20) {
+                this.showFieldError('new-vacancy-description', 'Описание должно содержать минимум 20 символов');
+                valid = false;
+            }
+
+            // Валидация зарплаты
+            if (salaryInput) {
+                if (salary < 10000) {
+                    this.showFieldError('new-vacancy-salary', 'Зарплата должна быть не менее 10 000 ₽');
+                    valid = false;
+                } else if (salary > 1000000) {
+                    this.showFieldError('new-vacancy-salary', 'Зарплата не может превышать 1 000 000 ₽');
+                    valid = false;
+                }
+            }
+
+            if (!valid) return;
+
+            // Показываем процесс публикации
+            const btn = document.getElementById('publish-vacancy-btn');
+            btn.disabled = true;
+            btn.textContent = 'Публикация...';
 
             const newVacancy = {
                 id: 'emp_' + Date.now(),
@@ -67,28 +106,21 @@ export class EmployerManager {
                 applicationsCount: 0
             };
 
-            // Показываем процесс
-            btn.disabled = true;
-            btn.textContent = 'Публикация...';
-
             try {
                 await this.sendToExternalApi(newVacancy);
                 console.log('✅ Вакансия отправлена на внешний Fake Jobs API');
             } catch (apiError) {
-                console.warn('⚠️ Не удалось отправить на внешний API (это нормально):', apiError.message);
+                console.warn('⚠️ Не удалось отправить на внешний API:', apiError.message);
             }
 
             this.addMyVacancy(newVacancy);
-
             this.clearForm();
-
             this.loadMyVacancies();
 
-            this.showNotification('Вакансия успешно опубликована!', 'success');
+            this.showNotification('✅ Вакансия успешно опубликована!', 'success');
 
             btn.disabled = false;
             btn.textContent = 'Опубликовать вакансию';
-
         });
     }
 
@@ -108,9 +140,7 @@ export class EmployerManager {
 
         const response = await fetch(this.externalApiUrl, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
 
@@ -182,6 +212,36 @@ export class EmployerManager {
                 </div>
             </div>
         `).join('');
+    }
+
+    // ====================== ВАЛИДАЦИЯ ======================
+    showFieldError(fieldId, message) {
+        const errorEl = document.getElementById(fieldId + '-error');
+        const input = document.getElementById(fieldId);
+        if (errorEl) {
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+        }
+        if (input) input.classList.add('error');
+    }
+
+    clearVacancyErrors() {
+        const fields = [
+            'new-vacancy-title',
+            'new-vacancy-company',
+            'new-vacancy-salary',
+            'new-vacancy-city',
+            'new-vacancy-description'
+        ];
+        fields.forEach(fieldId => {
+            const errorEl = document.getElementById(fieldId + '-error');
+            const input = document.getElementById(fieldId);
+            if (errorEl) {
+                errorEl.textContent = '';
+                errorEl.classList.remove('show');
+            }
+            if (input) input.classList.remove('error');
+        });
     }
 
     showNotification(message, type = 'success') {

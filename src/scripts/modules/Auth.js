@@ -1,22 +1,36 @@
+// src/js/modules/Auth.js
 export class Auth {
     constructor() {
         this.isLoggedIn = localStorage.getItem('jobfinder_logged_in') === 'true';
-        this.username = localStorage.getItem('jobfinder_username') || null;
+        this.currentUser = null;
         this.usersKey = 'jobfinder_users';
+        
+        this.loadCurrentUser();
     }
 
+    // Получить всех пользователей
     getUsers() {
         return JSON.parse(localStorage.getItem(this.usersKey)) || [];
     }
 
+    // Сохранить пользователей
     saveUsers(users) {
-        localStorage.setItem(this.usersKey, JSON.stringify(users));
+        localStorage.setItem(this.usersKey, JSON.stringify(users, null, 2));
+    }
+
+    getUsersAsJSON() {
+        const users = this.getUsers().map(user => ({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            registeredAt: user.registeredAt,
+        }));
+        return JSON.stringify(users, null, 2);
     }
 
     register(name, email, password) {
         const users = this.getUsers();
 
-        // Проверка на существование
         if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
             return { success: false, message: 'Пользователь с таким email уже существует' };
         }
@@ -25,7 +39,7 @@ export class Auth {
             id: Date.now(),
             name: name || email.split('@')[0],
             email: email.toLowerCase(),
-            password: password, // В реальном проекте — хэширование!
+            password: password,          
             registeredAt: new Date().toISOString(),
             phone: '',
             city: ''
@@ -35,64 +49,71 @@ export class Auth {
         this.saveUsers(users);
 
         // Автоматический вход
-        this.isLoggedIn = true;
-        this.username = newUser.name;
-        localStorage.setItem('jobfinder_logged_in', 'true');
-        localStorage.setItem('jobfinder_username', newUser.name);
-        localStorage.setItem('jobfinder_email', newUser.email);
+        this.loginUser(newUser);
 
         return { success: true, message: 'Регистрация прошла успешно!' };
     }
 
-    login(email) {
+    login(email, password) {
         const users = this.getUsers();
         const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
 
-        if (user) {
-            this.isLoggedIn = true;
-            this.username = user.name;
-            localStorage.setItem('jobfinder_logged_in', 'true');
-            localStorage.setItem('jobfinder_username', user.name);
-            localStorage.setItem('jobfinder_email', user.email);
-            this.updateUI();
-            return { success: true };
+        if (!user) {
+            return { success: false, message: 'Пользователь не найден' };
         }
 
-        // Если пользователя нет — создаём "гостевой" вход (как было раньше)
-        this.isLoggedIn = true;
-        this.username = email.split('@')[0] || 'Пользователь';
-        localStorage.setItem('jobfinder_logged_in', 'true');
-        localStorage.setItem('jobfinder_username', this.username);
-        this.updateUI();
+        if (user.password !== password) {
+            return { success: false, message: 'Неверный пароль' };
+        }
+
+        this.loginUser(user);
         return { success: true };
     }
 
-    isAuthenticated() {
-        return this.isLoggedIn;
+    loginUser(user) {
+        this.isLoggedIn = true;
+        this.currentUser = user;
+
+        localStorage.setItem('jobfinder_logged_in', 'true');
+        localStorage.setItem('jobfinder_username', user.name);
+        localStorage.setItem('jobfinder_email', user.email);
+        localStorage.setItem('jobfinder_current_user', JSON.stringify(user));
     }
 
-    updateUI() {
-        console.log(this.isLoggedIn
-            ? `👤 Авторизован как ${this.username}`
-            : '👤 Гость');
+    loadCurrentUser() {
+        const savedUser = localStorage.getItem('jobfinder_current_user');
+        if (savedUser) {
+            this.currentUser = JSON.parse(savedUser);
+        }
+    }
+
+    isAuthenticated() {
+        return this.isLoggedIn && !!this.currentUser;
     }
 
     getUsername() {
-        return this.username || localStorage.getItem('jobfinder_username') || 'Пользователь';
+        return this.currentUser?.name || localStorage.getItem('jobfinder_username') || 'Пользователь';
     }
 
     logout() {
         const keysToRemove = [
             'jobfinder_logged_in', 'jobfinder_username', 'jobfinder_email',
             'jobfinder_phone', 'jobfinder_city', 'jobfinder_favorites',
-            'jobfinder_applications', 'jobfinder_resume', 'employer_my_vacancies'
+            'jobfinder_applications', 'jobfinder_resume', 'employer_my_vacancies',
+            'jobfinder_current_user'
         ];
 
         keysToRemove.forEach(key => localStorage.removeItem(key));
 
         this.isLoggedIn = false;
-        this.username = null;
+        this.currentUser = null;
 
         window.location.href = './index.html';
+    }
+
+    // Удобный метод для отладки
+    logAllUsers() {
+        console.log('Зарегистрированные пользователи:', this.getUsers());
+        console.log('JSON пользователей:\n', this.getUsersAsJSON());
     }
 }

@@ -13,7 +13,6 @@
     <div class="container header__container">
       <a href="./">
       <div class="header__logo">
-        <!-- Inline SVG иконка брифкейса -->
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M20 7H4C2.89543 7 2 7.89543 2 9V17C2 18.1046 2.89543 19 4 19H20C21.1046 19 22 18.1046 22 17V9C22 7.89543 21.1046 7 20 7Z"
@@ -27,17 +26,14 @@
 
       <nav class="header__nav" id="header-nav">
         <a href="./#vacancies" class="header__link">Вакансии</a>
-        <a href="./#companies" class="header__link">Компании</a>
         <a href="./#tips" class="header__link">Советы</a>
         <a href="#" class="header__link">О сервисе</a>
       </nav>
 
       <div class="header__actions" id="header-actions">
-        <!-- Для неавторизованного пользователя -->
         <button class="header__login" id="login-btn">Вход</button>
         <button class="header__register" id="register-btn">Регистрация</button>
 
-        <!-- Для авторизованного пользователя (скрыто по умолчанию) -->
         <div id="user-panel" style="display: none; align-items: center; gap: 12px;">
           <span id="username-display" style="font-weight: 500; color: var(--color-primary);"></span>
           <button id="logout-btn"
@@ -55,9 +51,15 @@
   </header>
 
   <main>
-    <h1>ABOUT</h1>
-
-   </main>
+    <section class="about-hero">
+      <div class="container">
+        <div class="about-hero__content">
+          <h1>О сервисе JobFinder</h1>
+          <p class="about-hero__subtitle">Современная платформа для быстрого и удобного поиска работы и подбора персонала</p>
+        </div>
+      </div>
+    </section>
+  </main>
    <script type="module" src="/src/scripts/main.js"></script>
 </body>
 

@@ -58,8 +58,6 @@ h2 {
   color: #1e2937;
 }
 
-
-/* Адаптив для очень маленьких экранов */
 @media (max-width: 576px) {
   .hero__title {
     font-size: 32px;
@@ -70,7 +68,7 @@ h2 {
   }
   
   .header__nav {
-    display: none; /* пока без мобильного меню, можно добавить позже */
+    display: none; 
   }
   
   .header__actions {

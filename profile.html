@@ -27,13 +27,11 @@
 
             <nav class="header__nav" id="header-nav">
                 <a href="./#vacancies" class="header__link">Вакансии</a>
-                <a href="./#companies" class="header__link">Компании</a>
                 <a href="./#tips" class="header__link">Советы</a>
                 <a href="about.html" class="header__link">О сервисе</a>
             </nav>
 
             <div class="header__actions" id="header-actions">
-                <!-- Будет обновлено через Auth -->
             </div>
 
             <div class="header__burger" id="burger">
@@ -44,7 +42,6 @@
 
     <main class="profile">
         <div class="container profile__container">
-            <!-- Сайдбар -->
             <aside class="profile__sidebar">
                 <div class="profile__user">
                     <div class="profile__avatar" id="profile-avatar">👤</div>
@@ -62,7 +59,6 @@
                             class="badge">0</span></button>
                     <button class="profile__tab" data-tab="resume">Резюме</button>
 
-                    <!-- Новая вкладка -->
                     <button class="profile__tab" data-tab="employer">Для работодателей</button>
 
                     <button class="profile__tab" data-tab="settings">Настройки</button>
@@ -71,10 +67,8 @@
                 <button id="logout-btn" class="profile__logout">Выйти из аккаунта</button>
             </aside>
 
-            <!-- Контент вкладок -->
             <div class="profile__content">
 
-                <!-- Вкладка Профиль -->
                 <div id="tab-profile" class="profile__tab-content active">
                     <h1>Личные данные</h1>
                     <form id="profile-form" novalidate>
@@ -106,30 +100,26 @@
                     </form>
                 </div>
 
-                <!-- Вкладка Мои отклики -->
                 <div id="tab-applications" class="profile__tab-content">
                     <h1>Мои отклики</h1>
                     <div id="applications-list" class="applications-list"></div>
                 </div>
 
-                <!-- Вкладка Избранное -->
                 <div id="tab-favorites" class="profile__tab-content">
                     <h1>Избранные вакансии</h1>
                     <div id="favorites-list" class="vacancies__list"></div>
                 </div>
 
-                <!-- Вкладка Резюме -->
                 <div id="tab-resume" class="profile__tab-content">
                     <h1>Моё резюме</h1>
                     <div class="resume-editor">
                         <textarea id="resume-text" rows="15"
                             placeholder="Вставьте или напишите текст резюме..."></textarea>
                         <button id="save-resume" class="btn-primary">Сохранить резюме</button>
-                        <button id="download-resume" class="btn-secondary">Скачать PDF (мок)</button>
+                        <button id="download-resume" class="btn-secondary">Скачать PDF</button>
                     </div>
                 </div>
 
-                <!-- НОВАЯ ВКЛАДКА — Для работодателей -->
                 <div id="tab-employer" class="profile__tab-content">
                     <h1>Для работодателей</h1>
 
@@ -138,10 +128,8 @@
                         <button id="role-employer" class="role-btn active">Я работодатель</button>
                     </div>
 
-                    <!-- Контент для режима работодателя -->
                     <div id="employer-mode" class="employer-mode">
 
-                        <!-- Разместить новую вакансию -->
                         <div class="employer-section">
                             <h2>Разместить новую вакансию</h2>
                             <div class="employer-form">
@@ -162,7 +150,8 @@
                                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                                         <div class="form-field">
                                             <label>Зарплата от (₽)</label>
-                                            <input type="number" id="new-vacancy-salary" placeholder="120000" min="10000" />
+                                            <input type="number" id="new-vacancy-salary" placeholder="120000"
+                                                min="10000" />
                                             <div id="new-vacancy-salary-error" class="error-message"></div>
                                         </div>
                                         <div class="form-field">
@@ -175,11 +164,13 @@
                                     <div class="form-field">
                                         <label>Описание вакансии *</label>
                                         <textarea id="new-vacancy-description" rows="5"
-                                            placeholder="Обязанности, требования, условия работы..." required></textarea>
+                                            placeholder="Обязанности, требования, условия работы..."
+                                            required></textarea>
                                         <div id="new-vacancy-description-error" class="error-message"></div>
                                     </div>
 
-                                    <button type="submit" id="publish-vacancy-btn" class="btn-primary">Опубликовать вакансию</button>
+                                    <button type="submit" id="publish-vacancy-btn" class="btn-primary">Опубликовать
+                                        вакансию</button>
                                 </form>
                             </div>
                         </div>
@@ -187,21 +178,17 @@
                         <div class="employer-section">
                             <h2>Мои вакансии</h2>
                             <div id="my-vacancies-list" class="employer-vacancies-list">
-                                <!-- JS заполнит -->
                             </div>
                         </div>
 
-                        <!-- Отклики на мои вакансии -->
                         <div class="employer-section">
                             <h2>Отклики на мои вакансии</h2>
                             <div id="employer-applications-list" class="employer-applications-list">
-                                <!-- JS заполнит -->
                             </div>
                         </div>
 
                     </div>
 
-                    <!-- Сообщение для режима соискателя -->
                     <div id="candidate-mode" class="employer-mode"
                         style="display: none; text-align: center; padding: 80px 20px; color: #64748b;">
                         <p style="font-size: 18px;">Вы сейчас в режиме соискателя</p>
@@ -209,11 +196,18 @@
                     </div>
                 </div>
 
-                <!-- Вкладка Настройки -->
                 <div id="tab-settings" class="profile__tab-content">
                     <h1>Настройки</h1>
-                    <p>Здесь будут настройки уведомлений, смена пароля и т.д. (мок)</p>
-                    <button id="delete-account" class="danger-btn">Удалить аккаунт</button>
+
+                    <div style="margin: 30px 0;">
+                        <button id="export-json-btn" class="btn-primary">📤 Экспортировать все мои данные</button>
+                        <button id="import-json-btn" class="btn-secondary" style="margin-left: 12px;">📥 Импортировать
+                            данные</button>
+                    </div>
+
+                    <p style="color:#64748b; font-size: 14px;">
+                        Это позволит сохранить все отклики, избранное, резюме и настройки в файл.
+                    </p>
                 </div>
 
             </div>

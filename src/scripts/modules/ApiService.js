@@ -2,8 +2,8 @@
 export class ApiService {
     constructor() {
         this.localMockUrl = '/src/data/mock-vacancies.json';
-        this.externalApiUrl = 'https://fakejobs-api.vercel.app/jobs';   // Новый основной внешний API
-        this.fallbackApiUrl = 'https://dummyjson.com/products?limit=20'; // запасной
+        this.externalApiUrl = 'https://fakejobs-api.vercel.app/jobs';   
+        this.fallbackApiUrl = 'https://dummyjson.com/products?limit=20'; 
     }
 
     async getVacancies(filters = {}) {
@@ -13,7 +13,7 @@ export class ApiService {
             if (!response.ok) throw new Error('Local mock not available');
 
             let vacancies = await response.json();
-            console.log('✅ Вакансии загружены из локального JSON');
+            console.log('Вакансии загружены из локального JSON');
 
             vacancies = this.simulateRealTimeUpdate(vacancies);
             let filtered = this.applyFilters(vacancies, filters);
@@ -22,7 +22,7 @@ export class ApiService {
             return filtered;
 
         } catch (localError) {
-            console.warn('⚠️ Локальный mock недоступен, пробуем внешний Fake Jobs API...', localError.message);
+            console.warn('Локальный mock недоступен, пробуем внешний Fake Jobs API...', localError.message);
             
             try {
                 // 2. Пытаемся загрузить с хорошего Fake Jobs API
@@ -34,7 +34,7 @@ export class ApiService {
                 // Нормализуем данные под структуру нашего приложения
                 let vacancies = this.normalizeFakeJobsApi(jobs);
                 
-                console.log(`✅ Загружено ${vacancies.length} вакансий из FakeJobs API`);
+                console.log(`Загружено ${vacancies.length} вакансий из FakeJobs API`);
 
                 vacancies = this.simulateRealTimeUpdate(vacancies);
                 let filtered = this.applyFilters(vacancies, filters);
@@ -43,9 +43,8 @@ export class ApiService {
                 return filtered;
 
             } catch (externalError) {
-                console.warn('⚠️ Fake Jobs API тоже недоступен, используем запасной dummyjson...', externalError.message);
-                
-                // 3. Последний fallback — dummyjson
+                console.warn('Fake Jobs API тоже недоступен, используем запасной dummyjson...', externalError.message);
+
                 const res = await fetch(this.fallbackApiUrl);
                 const data = await res.json();
                 let vacancies = this.normalizeExternalData(data.products || []);
@@ -59,7 +58,7 @@ export class ApiService {
         }
     }
 
-    // ==================== НОРМАЛИЗАЦИЯ ДАННЫХ ИЗ FAKE JOBS API ====================
+    // НОРМАЛИЗАЦИЯ ДАННЫХ ИЗ FAKE JOBS API
     normalizeFakeJobsApi(jobs) {
         return jobs.map(job => ({
             id: parseInt(job.id) || Date.now() + Math.random(),
@@ -74,7 +73,7 @@ export class ApiService {
         }));
     }
 
-    // Парсим зарплату вида "$100K - $120K" → число
+
     parseSalary(salaryStr) {
         if (!salaryStr) return null;
         const match = salaryStr.match(/(\d+)/);
@@ -86,7 +85,6 @@ export class ApiService {
         return null;
     }
 
-    // ==================== СТАРЫЕ МЕТОДЫ (оставляем) ====================
     simulateRealTimeUpdate(vacancies) {
         return vacancies.map(v => ({
             ...v,
@@ -123,7 +121,6 @@ export class ApiService {
         return copy;
     }
 
-    // Запасной нормализатор для dummyjson
     normalizeExternalData(items) {
         return items.map((item, index) => ({
             id: item.id || index + 1000,

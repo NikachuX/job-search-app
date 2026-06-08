@@ -50,7 +50,6 @@ export class VacancyManager {
 
         this.hideLoading();
 
-        // Сообщение, если ничего не найдено
         if (this.filteredVacancies.length === 0) {
             container.innerHTML = `
         <div style="text-align:center; padding:60px 20px; color:#64748b;">
@@ -103,7 +102,6 @@ export class VacancyManager {
     }
 
     renderShowMoreButton(container) {
-        // Удаляем старую кнопку, если есть
         const oldBtn = document.querySelector('.show-more-btn');
         if (oldBtn) oldBtn.remove();
 

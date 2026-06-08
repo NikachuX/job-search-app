@@ -26,9 +26,91 @@ export class ProfileManager {
 
         this.initProfileForm();
         this.initResume();
-
-        // Инициализация работодателя
         this.employerManager.init();
+
+        // JSON Экспорт / Импорт 
+        this.initJsonExportImport();
+    }
+
+    initJsonExportImport() {
+        // Экспорт
+        document.getElementById('export-json-btn')?.addEventListener('click', () => {
+            this.exportUserDataToJSON();
+        });
+
+        // Импорт
+        document.getElementById('import-json-btn')?.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => this.importUserDataFromJSON(e);
+            input.click();
+        });
+    }
+
+    // JSON ЭКСПОРТ 
+    exportUserDataToJSON() {
+        const userData = {
+            user: {
+                name: this.auth.getUsername(),
+                email: localStorage.getItem('jobfinder_email'),
+                phone: localStorage.getItem('jobfinder_phone'),
+                city: localStorage.getItem('jobfinder_city'),
+                registeredAt: new Date().toISOString()
+            },
+            resume: localStorage.getItem('jobfinder_resume') || "",
+            favorites: this.favorites.getAll(),
+            applications: this.applications.getAll(),
+            myVacancies: JSON.parse(localStorage.getItem('employer_my_vacancies') || '[]'),
+            exportDate: new Date().toISOString()
+        };
+
+        const jsonString = JSON.stringify(userData, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `jobfinder-data-${this.auth.getUsername() || 'user'}.json`;
+        link.click();
+
+        URL.revokeObjectURL(url);
+
+        this.showNotification('✅ Данные успешно экспортированы в JSON!', 'success');
+    }
+
+    // JSON ИМПОРТ 
+    importUserDataFromJSON(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const data = JSON.parse(event.target.result);
+
+                // Пример импорта основных данных
+                if (data.user) {
+                    if (data.user.name) localStorage.setItem('jobfinder_username', data.user.name);
+                    if (data.user.email) localStorage.setItem('jobfinder_email', data.user.email);
+                    if (data.user.phone) localStorage.setItem('jobfinder_phone', data.user.phone);
+                    if (data.user.city) localStorage.setItem('jobfinder_city', data.user.city);
+                }
+
+                if (data.resume) localStorage.setItem('jobfinder_resume', data.resume);
+                if (data.applications) localStorage.setItem('jobfinder_applications', JSON.stringify(data.applications));
+                if (data.favorites) localStorage.setItem('jobfinder_favorites', JSON.stringify(data.favorites));
+                if (data.myVacancies) localStorage.setItem('employer_my_vacancies', JSON.stringify(data.myVacancies));
+
+                this.loadAllData();
+                this.renderUserInfo();
+                this.showNotification('✅ Данные успешно импортированы!', 'success');
+
+            } catch (err) {
+                this.showNotification('❌ Ошибка чтения JSON файла', 'error');
+            }
+        };
+        reader.readAsText(file);
     }
 
     renderUserInfo() {
@@ -46,7 +128,6 @@ export class ProfileManager {
 
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                // Убираем active у всех вкладок
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
 
@@ -68,11 +149,9 @@ export class ProfileManager {
 
         this.currentTab = tabId;
 
-        // Обновляем данные при переключении на определённые вкладки
         if (tabId === 'applications') this.renderApplications();
         if (tabId === 'favorites') this.renderFavorites();
         if (tabId === 'employer') {
-            // EmployerManager сам управляет своим состоянием
         }
     }
 
@@ -90,12 +169,11 @@ export class ProfileManager {
         if (favCount) favCount.textContent = this.favorites.getAll().length;
     }
 
-    // ==================== ПРОФИЛЬ ====================
+    // ПРОФИЛЬ 
     initProfileForm() {
         const form = document.getElementById('profile-form');
         if (!form) return;
 
-        // Заполняем текущие данные
         document.getElementById('input-name').value = this.auth.getUsername() || '';
         document.getElementById('input-email').value = localStorage.getItem('jobfinder_email') || '';
         document.getElementById('input-phone').value = localStorage.getItem('jobfinder_phone') || '';
@@ -111,13 +189,13 @@ export class ProfileManager {
 
             let valid = true;
 
-            // === ВАЛИДАЦИЯ ИМЕНИ ===
+            // ВАЛИДАЦИЯ ИМЕНИ 
             if (!name) {
                 this.showFieldError('input-name', 'Имя обязательно');
                 valid = false;
             }
 
-            // === ВАЛИДАЦИЯ EMAIL ===
+            // ВАЛИДАЦИЯ EMAIL
             if (!email) {
                 this.showFieldError('input-email', 'Email обязателен');
                 valid = false;
@@ -126,7 +204,7 @@ export class ProfileManager {
                 valid = false;
             }
 
-            // === ВАЛИДАЦИЯ ТЕЛЕФОНА ===
+            // ВАЛИДАЦИЯ ТЕЛЕФОНА 
             if (phone) {
                 if (!this.validatePhone(phone)) {
                     this.showFieldError('input-phone', 'Введите корректный номер телефона (+7XXXXXXXXXX или 8XXXXXXXXXX)');
@@ -146,32 +224,28 @@ export class ProfileManager {
         });
     }
 
-    // Новый метод — валидация телефона
     validatePhone(phone) {
-        // Убираем все нецифровые символы для проверки
         const cleaned = phone.replace(/\D/g, '');
-
-        // Российские номера: 11 цифр (с 7 или 8 в начале) или 10 цифр
         if (cleaned.length === 11) {
             return cleaned.startsWith('7') || cleaned.startsWith('8');
         }
         if (cleaned.length === 10) {
-            return true; // например 9991234567
+            return true; 
         }
 
         return false;
     }
 
     showFieldError(fieldId, message) {
-    const errorEl = document.getElementById(fieldId + '-error');
-    const input = document.getElementById(fieldId);
-    
-    if (errorEl) {
-        errorEl.textContent = message;
-        errorEl.classList.add('show');
+        const errorEl = document.getElementById(fieldId + '-error');
+        const input = document.getElementById(fieldId);
+
+        if (errorEl) {
+            errorEl.textContent = message;
+            errorEl.classList.add('show');
+        }
+        if (input) input.classList.add('error');
     }
-    if (input) input.classList.add('error');
-}
 
     clearProfileErrors() {
         const fields = ['input-name', 'input-email', 'input-phone', 'input-city'];
@@ -186,7 +260,7 @@ export class ProfileManager {
         });
     }
 
-    // ==================== РЕЗЮМЕ ====================
+    // РЕЗЮМЕ 
     initResume() {
         const textarea = document.getElementById('resume-text');
         const saveBtn = document.getElementById('save-resume');
@@ -208,7 +282,7 @@ export class ProfileManager {
         });
     }
 
-    // ==================== ОТКЛИКИ И ИЗБРАННОЕ ====================
+    // ОТКЛИКИ И ИЗБРАННОЕ
     renderApplications() {
         const container = document.getElementById('applications-list');
         if (!container) return;

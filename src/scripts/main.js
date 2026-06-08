@@ -12,17 +12,17 @@ class JobFinderApp {
     this.vacancyManager = new VacancyManager();
     this.modal = new Modal();
     this.profileManager = null;
-    console.log('🚀 JobFinder инициализирован');
+    console.log('JobFinder инициализирован');
   }
 
   async init() {
     this.updateHeaderUI();
     this.initLogout();
 
-    // Инициализируем менеджер вакансий
+    // Менеджер вакансий
     await this.vacancyManager.init(this.auth);
 
-    // Инициализируем модалки и меню
+    // Инициализиация модалок и меню
     this.initAuthModals();
     this.initMobileMenu();
     this.initAuthRequiredModal();
@@ -35,10 +35,10 @@ class JobFinderApp {
       this.profileManager.init();
     }
     this.initFillResumeButton();
-    console.log('✅ Приложение успешно запущено');
+    console.log('Приложение успешно запущено');
   }
 
-  // ====================== АВТОРИЗАЦИЯ ======================
+  // АВТОРИЗАЦИЯ
   initAuthModals() {
     const loginBtn = document.getElementById('login-btn');
     const registerBtn = document.getElementById('register-btn');
@@ -71,22 +71,26 @@ class JobFinderApp {
       if (!email) {
         this.showFieldError('login-email', 'Введите email');
         valid = false;
-      } else if (!email.includes('@')) {
-        this.showFieldError('login-email', 'Введите корректный email');
-        valid = false;
       }
-
       if (!password) {
         this.showFieldError('login-password', 'Введите пароль');
         valid = false;
       }
 
       if (valid) {
-        this.handleSuccessfulLogin(email);
+        const result = this.auth.login(email, password);
+
+        if (result.success) {
+          this.modal.hide('login-modal');
+          this.updateHeaderUI();
+          this.showNotification('✅ Вход выполнен успешно!', 'success');
+        } else {
+          this.showNotification(result.message, 'error');
+        }
       }
     });
 
-    // === РЕГИСТРАЦИЯ ===
+    // РЕГИСТРАЦИЯ 
     const registerForm = document.getElementById('register-form');
     registerForm?.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -127,7 +131,6 @@ class JobFinderApp {
     });
   }
 
-  // Вспомогательные методы
   showFieldError(fieldId, message) {
     const errorEl = document.getElementById(fieldId + '-error');
     const input = document.getElementById(fieldId);
@@ -159,11 +162,11 @@ class JobFinderApp {
     if (this.auth.login(email)) {
       this.modal.hide('login-modal');
       this.updateHeaderUI();
-      console.log('✅ Вход выполнен');
+      console.log('Вход выполнен');
     }
   }
 
-  // ====================== МОБИЛЬНОЕ МЕНЮ ======================
+  // МОБИЛЬНОЕ МЕНЮ 
   initMobileMenu() {
     const burger = document.getElementById('burger');
     const nav = document.getElementById('header-nav');
@@ -187,7 +190,7 @@ class JobFinderApp {
     });
   }
 
-  // ====================== МОДАЛКА "ТРЕБУЕТСЯ АВТОРИЗАЦИЯ" ======================
+  // МОДАЛКА "ТРЕБУЕТСЯ АВТОРИЗАЦИЯ"
   initAuthRequiredModal() {
     const goLogin = document.getElementById('go-to-login-btn');
     const goRegister = document.getElementById('go-to-register-btn');
@@ -203,7 +206,7 @@ class JobFinderApp {
     });
   }
 
-  // ====================== UI ШАПКИ ======================
+  // UI ШАПКИ 
   updateHeaderUI() {
     const loginBtn = document.getElementById('login-btn');
     const registerBtn = document.getElementById('register-btn');
@@ -230,17 +233,14 @@ class JobFinderApp {
 
     fillResumeBtn.addEventListener('click', () => {
       if (this.auth.isAuthenticated()) {
-        // Если залогинен — переходим в профиль на вкладку резюме
         window.location.href = 'profile.html#tab-resume';
       } else {
-        // Если не залогинен — показываем модалку авторизации
         this.modal.show('auth-required-modal');
       }
     });
   }
 
   initLogout() {
-    // Для всех страниц
     document.getElementById('logout-btn')?.addEventListener('click', () => {
       this.auth.logout();
     });
@@ -251,7 +251,6 @@ class JobFinderApp {
     if (!showAllBtn) return;
 
     showAllBtn.addEventListener('click', async () => {
-      // Сбрасываем все фильтры
       const minSalaryInput = document.getElementById('min-salary');
       const sortSelect = document.getElementById('sort-select');
       const searchInputs = document.querySelectorAll('.search__input');
@@ -262,12 +261,10 @@ class JobFinderApp {
         searchInputs.forEach(input => input.value = '');
       }
 
-      // Сбрасываем фильтры в VacancyManager и загружаем все вакансии
       if (this.vacancyManager) {
-        await this.vacancyManager.loadVacancies({}); // пустой объект = все вакансии
+        await this.vacancyManager.loadVacancies({}); 
       }
 
-      // Прокручиваем к секции вакансий
       document.getElementById('vacancies').scrollIntoView({
         behavior: 'smooth'
       });

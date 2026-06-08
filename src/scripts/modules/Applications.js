@@ -6,7 +6,6 @@ export class Applications {
     }
 
     add(vacancy) {
-        // Проверяем, не было ли уже отклика
         if (this.items.some(app => app.id === vacancy.id)) {
             return false;
         }
@@ -14,10 +13,10 @@ export class Applications {
         const application = {
             ...vacancy,
             appliedAt: new Date().toISOString(),
-            status: 'pending' // pending, reviewed, rejected, accepted
+            status: 'pending' 
         };
 
-        this.items.unshift(application); // новые сверху
+        this.items.unshift(application); 
         localStorage.setItem(this.key, JSON.stringify(this.items));
         return true;
     }

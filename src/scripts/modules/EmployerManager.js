@@ -41,7 +41,7 @@ export class EmployerManager {
         }
     }
 
-    // ====================== ПУБЛИКАЦИЯ ВАКАНСИИ ======================
+    // ПУБЛИКАЦИЯ ВАКАНСИИ =
     bindPublishVacancy() {
         const form = document.getElementById('publish-vacancy-form');
         if (!form) return;
@@ -90,7 +90,6 @@ export class EmployerManager {
 
             if (!valid) return;
 
-            // Показываем процесс публикации
             const btn = document.getElementById('publish-vacancy-btn');
             btn.disabled = true;
             btn.textContent = 'Публикация...';
@@ -108,16 +107,16 @@ export class EmployerManager {
 
             try {
                 await this.sendToExternalApi(newVacancy);
-                console.log('✅ Вакансия отправлена на внешний Fake Jobs API');
+                console.log('Вакансия отправлена на внешний Fake Jobs API');
             } catch (apiError) {
-                console.warn('⚠️ Не удалось отправить на внешний API:', apiError.message);
+                console.warn('Не удалось отправить на внешний API:', apiError.message);
             }
 
             this.addMyVacancy(newVacancy);
             this.clearForm();
             this.loadMyVacancies();
 
-            this.showNotification('✅ Вакансия успешно опубликована!', 'success');
+            this.showNotification('Вакансия успешно опубликована!', 'success');
 
             btn.disabled = false;
             btn.textContent = 'Опубликовать вакансию';
@@ -214,7 +213,7 @@ export class EmployerManager {
         `).join('');
     }
 
-    // ====================== ВАЛИДАЦИЯ ======================
+    // ВАЛИДАЦИЯ
     showFieldError(fieldId, message) {
         const errorEl = document.getElementById(fieldId + '-error');
         const input = document.getElementById(fieldId);
